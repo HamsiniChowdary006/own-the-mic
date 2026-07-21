@@ -132,7 +132,14 @@ const AUTH=(function(){
 
   function updateNav(u){
     if(!u)u=getUser();if(!u)return;
-    const pill=document.getElementById('user-pill');if(pill)pill.textContent=u.name.split(' ')[0];
+    const pill=document.getElementById('user-pill');
+    if(pill) {
+      if(u.profilePic) {
+        pill.innerHTML = `<img src="${u.profilePic}" style="width:20px;height:20px;border-radius:50%;object-fit:cover" /> <span>${u.name.split(' ')[0]}</span>`;
+      } else {
+        pill.textContent=u.name.split(' ')[0];
+      }
+    }
     const badge=document.getElementById('plan-badge');
     const trialDays=daysLeft(u);
     if(badge)badge.textContent=u.isPro?'PRO':'FREE TRIAL';
@@ -158,7 +165,7 @@ const AUTH=(function(){
 
   function showErr(el,msg){el.textContent=msg;el.style.display='block';}
 
-  return{register,login,logout,demo,updateNav,getUser,getToken,getQuestionsLeft,updateHomeStats};
+  return{register,login,logout,demo,updateNav,getUser,getToken,getQuestionsLeft,updateHomeStats,loginUser};
 })();
 
 function val(id){const el=document.getElementById(id);return el?el.value:'';}
@@ -268,7 +275,9 @@ function settingsTab(p,btn){
 }
 
 function getActiveKey(){
-  return {provider:'groq', key:'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'};
+  const provider = LS.get('otm_provider', 'gemini');
+  const key = LS.get('otm_apikey_' + provider, '');
+  return {provider, key};
 }
 function hasKey(){return!!getActiveKey().key;}
 
@@ -683,9 +692,13 @@ async function saveSession(res){
     strengths: res.strengths,
     improvements: res.improvements,
     recommendation: res.recommendation,
+    dimensions: res.dimensions,
+    aiProvider: res.aiProvider || currentProvider,
     qas: sess.answers.map(a => ({
       question: a.question,
-      answer: a.answer
+      answer: a.answer,
+      fillerCount: a.fillerCount,
+      wordCount: a.wordCount
     })),
     questionFeedback: res.questionFeedback
   };
@@ -726,7 +739,7 @@ function submitSessionFeedback(){
 
 /* ════ HISTORY ════ */
 async function renderHistory(){
-  const w=document.getElementById('hist-list');if(!w)return;
+  const w=document.getElementById('history-list');if(!w)return;
   w.innerHTML='<div class="loading-wrap"><div class="spinner"></div></div>';
   
   try {
@@ -738,26 +751,31 @@ async function renderHistory(){
     const data = await res.json();
     
     if(!data.sessions || data.sessions.length===0){
-      w.innerHTML='<div style="color:var(--text-dim);padding:20px;text-align:center">No sessions recorded yet. Start practicing!</div>';
+      w.innerHTML=`<div class="empty-state">
+        <div class="empty-state-icon">📋</div>
+        <div class="empty-state-title">No sessions recorded yet</div>
+        <div class="empty-state-desc">Start practicing by opening the "Practice" tab and speaking your first answer!</div>
+      </div>`;
       return;
     }
     
     let html='';
     data.sessions.forEach(s=>{
-      const dt=new Date(s.date).toLocaleDateString();
+      const dt=new Date(s.date).toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'});
       const sc=s.overallScore||0;
       const cl=sc>=80?'good':sc>=60?'mid':'low';
-      html+=`<div class="hist-card">
-        <div>
-          <div style="font-weight:600">${s.role} — ${s.qtype}</div>
-          <div style="font-size:13px;color:var(--text-dim);margin-top:4px">${dt}</div>
+      html+=`<div class="history-item">
+        <div class="hi-score ${cl}">${sc}</div>
+        <div class="hi-info">
+          <div class="hi-role">${s.role} — ${s.qtype}</div>
+          <div class="hi-meta">${dt}</div>
         </div>
-        <div class="hist-sc ${cl}">${sc}</div>
+        <div class="hi-date">${dt}</div>
       </div>`;
     });
     w.innerHTML=html;
   } catch (e) {
-    w.innerHTML='<div style="color:red;padding:20px;text-align:center">Failed to load history</div>';
+    w.innerHTML='<div style="color:var(--color-danger);padding:20px;text-align:center">Failed to load history</div>';
   }
 }
 
@@ -857,7 +875,14 @@ function renderFeedbackTab(){
   const user=AUTH.getUser();if(!user)return;
   const all=LS.get('otm_site_feedback',[]).filter(f=>f.uid===user.uid).reverse();
   const el=document.getElementById('past-feedback-list');if(!el)return;
-  if(!all.length){el.innerHTML='<div style="color:var(--text3);font-size:.8rem;text-align:center;padding:20px 0">No submissions yet · Share your first feedback →</div>';return;}
+  if(!all.length){
+    el.innerHTML=`<div class="empty-state" style="padding: var(--space-md) 0;">
+      <div class="empty-state-icon" style="font-size: 2rem;">💬</div>
+      <div class="empty-state-title" style="font-size: 0.9rem;">No feedback shared yet</div>
+      <div class="empty-state-desc" style="font-size: 0.78rem;">Your submissions will appear here. Share your first feedback to help us grow!</div>
+    </div>`;
+    return;
+  }
   el.innerHTML=all.map(f=>{
     const emojis=['','😕','😐','🙂','😊','🤩'];
     const date=new Date(f.ts).toLocaleDateString('en-IN',{day:'numeric',month:'short'});
@@ -964,6 +989,28 @@ function updateTTSIcon(active) {
     speaking.style.display = 'none';
   }
 }
+
+/* ════ GOOGLE OAUTH CALLBACK ════ */
+window.handleGoogleCredential = async function(response) {
+  try {
+    const res = await fetch('/api/auth/google', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ id_token: response.credential })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Google login failed');
+    
+    LS.set('otm_token', data.access_token);
+    data.user.trialStart = Date.now();
+    LS.set('otm_user', data.user);
+    AUTH.updateNav(data.user);
+    AUTH.loginUser(data.user);
+    toast('Signed in with Google! 👋');
+  } catch (e) {
+    toast('Google Login Error: ' + e.message);
+  }
+};
 
 /* ════ INIT ════ */
 window.addEventListener('DOMContentLoaded',()=>{

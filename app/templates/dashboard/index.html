@@ -9,7 +9,7 @@
     Own<em>The</em>Mic
   </div>
   <div class="tnav-right">
-    <div class="plan-badge" id="plan-badge">FREE TRIAL</div>
+    <div class="tnav-badge" id="plan-badge">FREE TRIAL</div>
     <div class="user-pill" id="user-pill">User</div>
     <button class="logout-btn" onclick="AUTH.logout()">Sign out</button>
   </div>
@@ -56,8 +56,8 @@
       <h1>Ready to own <span>every room?</span> 👋</h1>
       <p>OwnTheMic uses real AI to coach your interview skills. Speak, get scored across 6 dimensions, and improve with every session. Your free trial gives you 15 days to explore everything.</p>
       <div class="hero-cta-row">
-        <button class="btn btn-primary" onclick="showTab('tab-session')" style="width:auto;padding:13px 28px">Start a session →</button>
-        <button class="btn btn-ghost" onclick="showTab('tab-payment')" style="padding:13px 24px">View plans</button>
+        <button class="btn btn-primary" onclick="showTab('tab-session')" style="width:auto">Start a session →</button>
+        <button class="btn btn-ghost" onclick="showTab('tab-payment')">View plans</button>
       </div>
       <div class="hero-stats">
         <div class="hs-item"><div class="hs-n"><em id="stat-sessions">0</em></div><div class="hs-l">Sessions done</div></div>
@@ -67,10 +67,10 @@
     </div>
 
     <!-- About the app -->
-    <div style="margin-bottom:40px">
+    <div style="margin-bottom:var(--space-2xl)">
       <div class="sec-tag">About OwnTheMic</div>
       <div class="sec-title">Your personal AI<br>interview coach.</div>
-      <div class="sec-body" style="margin-bottom:24px">OwnTheMic is built specifically for students and freshers who want to walk into interviews with real confidence. You practice by speaking — just like an actual interview — and a real AI evaluates your answer, identifies patterns, and tells you exactly what to fix. No generic chatbot. No scripted feedback. Just honest, detailed coaching that improves session by session.</div>
+      <div class="sec-body" style="margin-bottom:var(--space-md)">OwnTheMic is built specifically for students and freshers who want to walk into interviews with real confidence. You practice by speaking — just like an actual interview — and a real AI evaluates your answer, identifies patterns, and tells you exactly what to fix. No generic chatbot. No scripted feedback. Just honest, detailed coaching that improves session by session.</div>
 
       <div class="features-grid">
         <div class="feat-card">
@@ -107,10 +107,10 @@
     </div>
 
     <!-- How to use -->
-    <div style="margin-bottom:40px">
+    <div style="margin-bottom:var(--space-2xl)">
       <div class="sec-tag">How to use</div>
       <div class="sec-title">From signup to scored<br>in 3 minutes.</div>
-      <div class="sec-body" style="margin-bottom:24px">No setup, no downloads. Works right in your browser on Chrome. Here's the full flow:</div>
+      <div class="sec-body" style="margin-bottom:var(--space-md)">No setup, no downloads. Works right in your browser on Chrome. Here's the full flow:</div>
       <div class="steps-grid">
         <div class="step-card">
           <div class="step-num">1</div>
@@ -148,10 +148,10 @@
     </div>
 
     <!-- Confidence Score explainer -->
-    <div style="margin-bottom:40px">
+    <div style="margin-bottom:var(--space-2xl)">
       <div class="sec-tag">How Scoring Works</div>
       <div class="sec-title">6 dimensions.<br>One Confidence Score.</div>
-      <div class="sec-body" style="margin-bottom:24px">After every session, the AI analyses your complete transcript and scores you across 6 specific dimensions. Each is weighted differently. Here's exactly what each one measures:</div>
+      <div class="sec-body" style="margin-bottom:var(--space-md)">After every session, the AI analyses your complete transcript and scores you across 6 specific dimensions. Each is weighted differently. Here's exactly what each one measures:</div>
 
       <div class="metrics-grid">
         <div class="metric-card">
@@ -204,7 +204,7 @@
         </div>
       </div>
 
-      <div style="margin-top:20px;background:rgba(124,111,255,.05);border:1px solid rgba(124,111,255,.18);border-radius:16px;padding:20px 24px;display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap">
+      <div style="margin-top:var(--space-md);background:rgba(124,111,255,.05);border:1px solid rgba(124,111,255,.18);border-radius:var(--radius-md);padding:var(--space-md) var(--space-lg);display:flex;align-items:flex-start;gap:var(--space-md);flex-wrap:wrap">
         <div style="flex:1;min-width:200px">
           <div style="font-family:var(--font);font-size:.9rem;font-weight:700;margin-bottom:5px;letter-spacing:-.02em">How the Confidence Score is calculated</div>
           <div style="font-size:.8rem;color:var(--text2);line-height:1.65;font-weight:300">Each dimension is scored 0–100, then weighted and summed. Scores above 80 are interview-ready. The AI recalibrates feedback based on your role and question type.</div>
@@ -226,8 +226,8 @@
     <!-- Setup card -->
     <div id="session-setup">
       <div class="sec-tag">New Session</div>
-      <div class="sec-title" style="margin-bottom:4px">Configure your interview</div>
-      <div class="sec-body" style="margin-bottom:24px">Takes 30 seconds. Pick your role and preferences below.</div>
+      <div class="sec-title" style="margin-bottom:var(--space-xs)">Configure your interview</div>
+      <div class="sec-body" style="margin-bottom:var(--space-md)">Takes 30 seconds. Pick your role and preferences below.</div>
 
       <div class="setup-card">
         <div class="setup-header">
@@ -347,7 +347,7 @@
             <div class="sdot" id="sd3"></div>
             <div class="sdot" id="sd4"></div>
           </div>
-          <button class="btn btn-primary btn-sm" id="next-btn" onclick="setupNext()" disabled style="width:auto;padding:10px 22px">Next →</button>
+          <button class="btn btn-primary btn-sm" id="next-btn" onclick="setupNext()" disabled style="width:auto">Next →</button>
         </div>
       </div>
 
@@ -447,11 +447,11 @@
         </div>
 
         <!-- Locked -->
-        <div id="locked-msg" style="display:none;flex-direction:column;align-items:center;text-align:center;padding:36px 20px;gap:12px;background:rgba(8,7,15,.7);border:1px solid rgba(124,111,255,.2);border-radius:18px">
+        <div id="locked-msg" style="display:none;flex-direction:column;align-items:center;text-align:center;padding:var(--space-xl) var(--space-lg);gap:var(--space-sm);background:rgba(8,7,15,.7);border:1px solid rgba(124,111,255,.2);border-radius:var(--radius-md)">
           <div style="font-size:2.5rem">🔒</div>
           <div style="font-family:var(--font);font-size:1rem;font-weight:700;letter-spacing:-.03em">Free questions used up</div>
           <div style="font-size:.82rem;color:var(--text3);max-width:280px;line-height:1.6">Upgrade to Pro for unlimited practice, full scoring, and model answers.</div>
-          <button class="btn btn-primary" onclick="showTab('tab-payment')" style="width:auto;padding:11px 24px">View plans →</button>
+          <button class="btn btn-primary" onclick="showTab('tab-payment')" style="width:auto">View plans →</button>
         </div>
       </div>
     </div>
@@ -519,8 +519,8 @@
         </div>
 
         <div class="cta-row-res">
-          <button class="btn btn-primary" onclick="startNewSession()" style="width:auto;padding:12px 26px">Practice again →</button>
-          <button class="btn btn-ghost" onclick="copyScore()" style="padding:12px 20px">Copy score</button>
+          <button class="btn btn-primary" onclick="startNewSession()" style="width:auto">Practice again →</button>
+          <button class="btn btn-ghost" onclick="copyScore()">Copy score</button>
         </div>
       </div>
     </div>
@@ -749,7 +749,7 @@
       </div>
 
       <!-- College / B2B -->
-      <div style="margin-top:24px;background:rgba(124,111,255,.06);border:1px solid rgba(124,111,255,.18);border-radius:20px;padding:28px 32px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <div style="margin-top:var(--space-xl);background:rgba(124,111,255,.06);border:1px solid rgba(124,111,255,.18);border-radius:var(--radius-lg);padding:var(--space-lg) var(--space-xl);display:flex;align-items:center;gap:var(--space-lg);flex-wrap:wrap">
         <div style="flex:1;min-width:200px">
           <div style="font-family:var(--font);font-size:1rem;font-weight:700;letter-spacing:-.03em;margin-bottom:5px">For Colleges & Placement Cells</div>
           <div style="font-size:.82rem;color:var(--text2);line-height:1.6;font-weight:300">Bulk licences for 50–500 students, TPO dashboard, batch readiness analytics, and branded experience. Special placement season pricing.</div>

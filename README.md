@@ -41,11 +41,24 @@ OwnTheMic is a web application that uses artificial intelligence to coach you on
 4. **Configure environment variables**
    Rename `.env.example` to `.env` and fill in your secrets.
    ```env
-   SECRET_KEY=your-secret-key
-   JWT_SECRET_KEY=your-jwt-secret-key
-   # DATABASE_URL=postgresql://postgres:password@localhost:5432/ownthemic
+    SECRET_KEY=your-secret-key
+    JWT_SECRET_KEY=your-jwt-secret-key
+    DATABASE_URL=postgresql://postgres:password@your-supabase-db-host:5432/postgres
+    
+    # Google OAuth Credentials
+    GOOGLE_CLIENT_ID=your-google-oauth-client-id
+    GOOGLE_CLIENT_SECRET=your-google-oauth-client-secret
+    
+    # AI Provider API Keys
+    GEMINI_API_KEY=your-gemini-api-key
+    GROQ_API_KEY=your-groq-api-key
+    
+    # Supabase Storage Configuration
+    SUPABASE_URL=your-supabase-url
+    SUPABASE_KEY=your-supabase-anon-key
+    SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
    ```
-   *(If you leave `DATABASE_URL` commented out, the app will automatically use a local SQLite database `app.db` for easy development).*
+   *(DATABASE_URL is required to run the application; the local SQLite database fallback is now restricted only to the test environment).*
 
 5. **Initialize the Database**
    Run the database migrations to create the required tables:

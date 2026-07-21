@@ -33,7 +33,21 @@
     <div class="field"><label>Password</label><input id="su-pass" type="password" placeholder="Min 6 characters"></div>
     <div class="field"><label>Confirm password</label><input id="su-pass2" type="password" placeholder="Repeat password"></div>
   </div>
-  <button class="btn btn-primary" onclick="AUTH.register()" style="margin-top:8px">Create account →</button>
+  <button class="btn btn-primary" onclick="AUTH.register()" style="margin-bottom:var(--space-md)">Create account →</button>
+  <div style="display:flex;align-items:center;margin-bottom:var(--space-md);color:var(--text3);font-size:.75rem">
+    <div style="height: 1px; flex-grow: 1; background: rgba(255,255,255,0.08)"></div>
+    <span style="padding: 0 8px">or</span>
+    <div style="height: 1px; flex-grow: 1; background: rgba(255,255,255,0.08)"></div>
+  </div>
+  <div class="g_id_signin"
+       data-type="standard"
+       data-shape="pill"
+       data-theme="filled_black"
+       data-text="continue_with"
+       data-size="large"
+       data-logo_alignment="left"
+       data-width="340">
+  </div>
   <div class="auth-switch">Already have an account? <a onclick="showPage('pg-signin')">Sign in</a></div>
 </div>
 </div>
