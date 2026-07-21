@@ -1,0 +1,41 @@
+
+<div id="pg-signup" class="page active">
+<div class="auth-wrap">
+<div class="auth-card">
+  <div class="auth-logo">
+    <div class="auth-logo-icon">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="8" y="2" width="8" height="13" rx="4" fill="white"/><path d="M5 11c0 3.866 3.134 7 7 7s7-3.134 7-7" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/><line x1="12" y1="18" x2="12" y2="22" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="9" y1="22" x2="15" y2="22" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+    <div class="auth-logo-text">Own<em>The</em>Mic</div>
+  </div>
+  <div class="auth-title">Create your account</div>
+  <div class="auth-sub">Join thousands of students sharpening their interview skills</div>
+  <div id="signup-err" class="err-banner"></div>
+  <div class="form-row">
+    <div class="field"><label>Full name</label><input id="su-name" type="text" placeholder="Arjun Sharma" autocomplete="name"></div>
+    <div class="field"><label>Age</label><input id="su-age" type="number" placeholder="21" min="15" max="60"></div>
+  </div>
+  <div class="form-row">
+    <div class="field">
+      <label>Gender</label>
+      <select id="su-gender">
+        <option value="">Select gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="nonbinary">Non-binary</option>
+        <option value="prefer_not">Prefer not to say</option>
+      </select>
+    </div>
+    <div class="field"><label>College / University</label><input id="su-college" type="text" placeholder="IIT Bombay"></div>
+  </div>
+  <div class="field"><label>Email or Phone</label><input id="su-email" type="text" placeholder="you@college.edu or +91 98765 43210" autocomplete="email"><div class="hint">We'll use this to save your progress</div></div>
+  <div class="form-row">
+    <div class="field"><label>Password</label><input id="su-pass" type="password" placeholder="Min 6 characters"></div>
+    <div class="field"><label>Confirm password</label><input id="su-pass2" type="password" placeholder="Repeat password"></div>
+  </div>
+  <button class="btn btn-primary" onclick="AUTH.register()" style="margin-top:8px">Create account →</button>
+  <div class="auth-switch">Already have an account? <a onclick="showPage('pg-signin')">Sign in</a></div>
+</div>
+</div>
+</div>
+

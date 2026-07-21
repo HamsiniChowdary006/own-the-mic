@@ -1,0 +1,853 @@
+
+<div id="pg-dashboard" class="page">
+<!-- Top Nav -->
+<div class="topnav">
+  <div class="tnav-logo">
+    <div class="tnav-logo-mark" style="width:26px;height:26px;border-radius:8px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="8" y="2" width="8" height="13" rx="4" fill="white"/><path d="M5 11c0 3.866 3.134 7 7 7s7-3.134 7-7" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/><line x1="12" y1="18" x2="12" y2="22" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="9" y1="22" x2="15" y2="22" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+    Own<em>The</em>Mic
+  </div>
+  <div class="tnav-right">
+    <div class="plan-badge" id="plan-badge">FREE TRIAL</div>
+    <div class="user-pill" id="user-pill">User</div>
+    <button class="logout-btn" onclick="AUTH.logout()">Sign out</button>
+  </div>
+</div>
+
+<div class="dash-layout">
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="slink active" onclick="showTab('tab-home')" id="slink-home">
+    <svg class="slink-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+    Home
+  </div>
+  <div class="slink" onclick="showTab('tab-session')" id="slink-session">
+    <svg class="slink-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clip-rule="evenodd"/></svg>
+    Practice
+  </div>
+  <div class="slink" onclick="showTab('tab-history')" id="slink-history">
+    <svg class="slink-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
+    History
+  </div>
+  <div class="slink" onclick="showTab('tab-feedback')" id="slink-feedback">
+    <svg class="slink-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
+    Feedback
+  </div>
+  <div class="sidebar-sep"></div>
+  <div class="slink" onclick="showTab('tab-payment')" id="slink-payment">
+    <svg class="slink-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/></svg>
+    Upgrade
+  </div>
+  <div class="slink" onclick="showTab('tab-settings')" id="slink-settings">
+    <svg class="slink-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
+    Settings
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main-content">
+
+  <!-- ── TAB: HOME ── -->
+  <div id="tab-home" class="tab-content">
+    <!-- Welcome hero -->
+    <div class="welcome-hero">
+      <div class="sec-tag">Your Dashboard</div>
+      <h1>Ready to own <span>every room?</span> 👋</h1>
+      <p>OwnTheMic uses real AI to coach your interview skills. Speak, get scored across 6 dimensions, and improve with every session. Your free trial gives you 15 days to explore everything.</p>
+      <div class="hero-cta-row">
+        <button class="btn btn-primary" onclick="showTab('tab-session')" style="width:auto;padding:13px 28px">Start a session →</button>
+        <button class="btn btn-ghost" onclick="showTab('tab-payment')" style="padding:13px 24px">View plans</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hs-item"><div class="hs-n"><em id="stat-sessions">0</em></div><div class="hs-l">Sessions done</div></div>
+        <div class="hs-item"><div class="hs-n"><em id="stat-score">—</em></div><div class="hs-l">Best score</div></div>
+        <div class="hs-item"><div class="hs-n"><em id="stat-days">15</em></div><div class="hs-l">Trial days left</div></div>
+      </div>
+    </div>
+
+    <!-- About the app -->
+    <div style="margin-bottom:40px">
+      <div class="sec-tag">About OwnTheMic</div>
+      <div class="sec-title">Your personal AI<br>interview coach.</div>
+      <div class="sec-body" style="margin-bottom:24px">OwnTheMic is built specifically for students and freshers who want to walk into interviews with real confidence. You practice by speaking — just like an actual interview — and a real AI evaluates your answer, identifies patterns, and tells you exactly what to fix. No generic chatbot. No scripted feedback. Just honest, detailed coaching that improves session by session.</div>
+
+      <div class="features-grid">
+        <div class="feat-card">
+          <div class="feat-icon" style="background:rgba(124,111,255,.12);border:1px solid rgba(124,111,255,.2)">🎙️</div>
+          <h3>Voice-powered practice</h3>
+          <p>Speak your answers out loud — the AI transcribes in real time and tracks fillers, pace, and clarity as you go.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon" style="background:rgba(0,212,160,.1);border:1px solid rgba(0,212,160,.2)">📊</div>
+          <h3>6-dimension scoring</h3>
+          <p>After every session, get a full Confidence Score with breakdowns for content, structure, clarity, pace, fillers, and depth.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon" style="background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.18)">🧠</div>
+          <h3>Adaptive AI questions</h3>
+          <p>Too short? The AI fires a follow-up. Strong answer? It moves on. Just like a real interviewer — not a static script.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon" style="background:rgba(255,107,74,.08);border:1px solid rgba(255,107,74,.18)">⭐</div>
+          <h3>Model answers</h3>
+          <p>After each question, see exactly how a perfect STAR-format answer would look — tailored to your role.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon" style="background:rgba(124,111,255,.12);border:1px solid rgba(124,111,255,.2)">📄</div>
+          <h3>Resume-aware questions</h3>
+          <p>Paste your resume and the AI generates questions specific to your background, projects, and experience.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon" style="background:rgba(0,212,160,.1);border:1px solid rgba(0,212,160,.2)">📈</div>
+          <h3>Progress tracking</h3>
+          <p>Every session is saved. Review past scores, see your improvement over time, and track your weak dimensions.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- How to use -->
+    <div style="margin-bottom:40px">
+      <div class="sec-tag">How to use</div>
+      <div class="sec-title">From signup to scored<br>in 3 minutes.</div>
+      <div class="sec-body" style="margin-bottom:24px">No setup, no downloads. Works right in your browser on Chrome. Here's the full flow:</div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div style="font-size:1.2rem;margin-bottom:10px">📝</div>
+          <h4>Create your account</h4>
+          <p>Sign up with your name, email, college, and a password. Your free 15-day trial starts immediately — no credit card needed.</p>
+          <span class="step-chip">~30 seconds</span>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div style="font-size:1.2rem;margin-bottom:10px">🎯</div>
+          <h4>Configure session</h4>
+          <p>Pick your role (SWE, Finance, PM…), question type (Behavioural, Technical…), session length, and whether you want a timer.</p>
+          <span class="step-chip">~30 seconds</span>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div style="font-size:1.2rem;margin-bottom:10px">🎙️</div>
+          <h4>Speak your answers</h4>
+          <p>Hit the mic, speak naturally. Your transcript appears in real time. Fillers are highlighted automatically. AI may probe with a follow-up.</p>
+          <span class="step-chip">2–3 min/answer</span>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div style="font-size:1.2rem;margin-bottom:10px">📊</div>
+          <h4>Get your score report</h4>
+          <p>Instant Confidence Score with 6-dimension breakdown, filler analysis, AI strengths/improvements, and model answers per question.</p>
+          <span class="step-chip">Instant results</span>
+        </div>
+      </div>
+      <div style="margin-top:16px;padding:16px 20px;background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:14px;font-size:.8rem;color:var(--text2);display:flex;align-items:flex-start;gap:12px">
+        <span style="font-size:1rem;flex-shrink:0">🌐</span>
+        <div><strong style="color:var(--text)">Browser requirement:</strong> OwnTheMic uses the Web Speech API for live transcription. Works best in <strong style="color:var(--text)">Google Chrome</strong> on desktop. Firefox has limited support; Safari is not supported for recording.</div>
+      </div>
+    </div>
+
+    <!-- Confidence Score explainer -->
+    <div style="margin-bottom:40px">
+      <div class="sec-tag">How Scoring Works</div>
+      <div class="sec-title">6 dimensions.<br>One Confidence Score.</div>
+      <div class="sec-body" style="margin-bottom:24px">After every session, the AI analyses your complete transcript and scores you across 6 specific dimensions. Each is weighted differently. Here's exactly what each one measures:</div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="mi" style="background:rgba(124,111,255,.12);border:1px solid rgba(124,111,255,.2)">🎯</div>
+          <div class="mc">
+            <h4>Content Relevance <span class="mc-weight" style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);color:var(--purple)">25%</span></h4>
+            <p>Does your answer actually address the question? The AI checks whether your response covers the core ask, includes relevant context, and stays on topic.</p>
+            <div class="mc-how">Semantic similarity between question and answer, topic coverage, avoidance of tangents.</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="mi" style="background:rgba(0,212,160,.1);border:1px solid rgba(0,212,160,.2)">🏗️</div>
+          <div class="mc">
+            <h4>Answer Structure <span class="mc-weight" style="background:rgba(0,212,160,.08);border:1px solid rgba(0,212,160,.2);color:var(--teal)">20%</span></h4>
+            <p>Is your answer clearly organised? For behavioural questions, the AI specifically checks for STAR format: Situation → Task → Action → Result.</p>
+            <div class="mc-how">STAR pattern detection, logical flow, presence of setup → action → outcome arc.</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="mi" style="background:rgba(0,212,160,.1);border:1px solid rgba(0,212,160,.2)">🔊</div>
+          <div class="mc">
+            <h4>Voice Clarity <span class="mc-weight" style="background:rgba(0,212,160,.08);border:1px solid rgba(0,212,160,.2);color:var(--teal)">15%</span></h4>
+            <p>How easy is your speech to follow? The AI uses transcript accuracy as a proxy — unclear or mumbled speech produces more transcription errors.</p>
+            <div class="mc-how">Speech-to-text confidence scores, word error estimation, transcript completeness.</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="mi" style="background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.18)">🎵</div>
+          <div class="mc">
+            <h4>Voice Modulation <span class="mc-weight" style="background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.18);color:var(--amber)">15%</span></h4>
+            <p>Are you speaking at an interview-appropriate pace? Ideal is 110–150 WPM. Too fast = nervous. Too slow = loses attention. Rhythm variation matters too.</p>
+            <div class="mc-how">Words per minute (WPM), pause detection, rhythm variance throughout the answer.</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="mi" style="background:rgba(255,107,74,.08);border:1px solid rgba(255,107,74,.18)">🚫</div>
+          <div class="mc">
+            <h4>Filler Word Control <span class="mc-weight" style="background:rgba(255,107,74,.08);border:1px solid rgba(255,107,74,.18);color:var(--coral)">15%</span></h4>
+            <p>"Um", "uh", "basically", "like", "you know" — each tracked in real time. Interviewers notice these immediately. Fewer fillers = higher score.</p>
+            <div class="mc-how">Filler-to-total-word ratio. Tracked fillers: um, uh, like, basically, you know, sort of, kind of, literally, actually (overuse).</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="mi" style="background:rgba(124,111,255,.12);border:1px solid rgba(124,111,255,.2)">💡</div>
+          <div class="mc">
+            <h4>Answer Depth <span class="mc-weight" style="background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);color:var(--purple)">10%</span></h4>
+            <p>Does your answer go beyond surface level? Rewards specific examples, quantified outcomes ("grew sales 20%"), and real understanding over generic statements.</p>
+            <div class="mc-how">Specificity analysis, presence of numbers/examples, response length vs question complexity.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;background:rgba(124,111,255,.05);border:1px solid rgba(124,111,255,.18);border-radius:16px;padding:20px 24px;display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap">
+        <div style="flex:1;min-width:200px">
+          <div style="font-family:var(--font);font-size:.9rem;font-weight:700;margin-bottom:5px;letter-spacing:-.02em">How the Confidence Score is calculated</div>
+          <div style="font-size:.8rem;color:var(--text2);line-height:1.65;font-weight:300">Each dimension is scored 0–100, then weighted and summed. Scores above 80 are interview-ready. The AI recalibrates feedback based on your role and question type.</div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;align-items:center">
+          <span style="padding:5px 12px;border-radius:100px;background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);color:var(--purple);font-size:.72rem;font-weight:600">Content 25%</span>
+          <span style="padding:5px 12px;border-radius:100px;background:rgba(0,212,160,.08);border:1px solid rgba(0,212,160,.2);color:var(--teal);font-size:.72rem;font-weight:600">Structure 20%</span>
+          <span style="padding:5px 12px;border-radius:100px;background:rgba(0,212,160,.08);border:1px solid rgba(0,212,160,.2);color:var(--teal);font-size:.72rem;font-weight:600">Clarity 15%</span>
+          <span style="padding:5px 12px;border-radius:100px;background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.18);color:var(--amber);font-size:.72rem;font-weight:600">Modulation 15%</span>
+          <span style="padding:5px 12px;border-radius:100px;background:rgba(255,107,74,.08);border:1px solid rgba(255,107,74,.18);color:var(--coral);font-size:.72rem;font-weight:600">Fillers 15%</span>
+          <span style="padding:5px 12px;border-radius:100px;background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.2);color:var(--purple);font-size:.72rem;font-weight:600">Depth 10%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB: SESSION SETUP + ACTIVE ── -->
+  <div id="tab-session" class="tab-content" style="display:none">
+    <!-- Setup card -->
+    <div id="session-setup">
+      <div class="sec-tag">New Session</div>
+      <div class="sec-title" style="margin-bottom:4px">Configure your interview</div>
+      <div class="sec-body" style="margin-bottom:24px">Takes 30 seconds. Pick your role and preferences below.</div>
+
+      <div class="setup-card">
+        <div class="setup-header">
+          <div class="setup-title" id="setup-step-title">Step 1 of 5 — Choose your role</div>
+          <div style="font-size:.7rem;color:var(--text3)" id="setup-step-count">1 / 5</div>
+        </div>
+        <div class="prog-bar"><div class="prog-fill" id="setup-prog" style="width:20%"></div></div>
+
+        <!-- Step 1: Role -->
+        <div class="setup-step active" id="ss1">
+          <div class="step-label">Your target role</div>
+          <div class="step-q">What <span style="color:var(--purple)">role</span> are you interviewing for?</div>
+          <div class="step-hint">Pick the closest match — this shapes every question the AI generates.</div>
+          <div class="role-grid" id="role-grid">
+            <div class="role-card" data-v="Software Engineer" onclick="selectRole(this)"><div class="rc-icon">💻</div><div class="rc-name">Software Engineer</div></div>
+            <div class="role-card" data-v="Product Manager" onclick="selectRole(this)"><div class="rc-icon">📱</div><div class="rc-name">Product Manager</div></div>
+            <div class="role-card" data-v="Data Analyst" onclick="selectRole(this)"><div class="rc-icon">📊</div><div class="rc-name">Data Analyst</div></div>
+            <div class="role-card" data-v="Finance / Banking" onclick="selectRole(this)"><div class="rc-icon">🏦</div><div class="rc-name">Finance / Banking</div></div>
+            <div class="role-card" data-v="Marketing" onclick="selectRole(this)"><div class="rc-icon">📣</div><div class="rc-name">Marketing</div></div>
+            <div class="role-card" data-v="Consulting" onclick="selectRole(this)"><div class="rc-icon">🧩</div><div class="rc-name">Consulting</div></div>
+            <div class="role-card" data-v="Human Resources" onclick="selectRole(this)"><div class="rc-icon">👥</div><div class="rc-name">Human Resources</div></div>
+            <div class="role-card" data-v="Design / UX" onclick="selectRole(this)"><div class="rc-icon">🎨</div><div class="rc-name">Design / UX</div></div>
+            <div class="role-card" data-v="Operations" onclick="selectRole(this)"><div class="rc-icon">⚙️</div><div class="rc-name">Operations</div></div>
+            <div class="role-card" data-v="Electrical Engineering" onclick="selectRole(this)"><div class="rc-icon">⚡</div><div class="rc-name">Electrical Engineering</div></div>
+          </div>
+          <div class="field" style="margin-bottom:0;margin-top:4px">
+            <input id="custom-role" type="text" placeholder="Or type a custom role…" oninput="setCustomRole(this.value)">
+          </div>
+        </div>
+
+        <!-- Step 2: Q type -->
+        <div class="setup-step" id="ss2">
+          <div class="step-label">Question type</div>
+          <div class="step-q">What kind of <span style="color:var(--purple)">questions</span>?</div>
+          <div class="step-hint">Behavioural is the most common. Technical is for coding/domain roles.</div>
+          <div class="qtype-list">
+            <div class="qtype-row" data-v="Behavioural (STAR)" onclick="selectQtype(this)">
+              <div class="qt-icon">⭐</div>
+              <div class="qt-info"><div class="qt-name">Behavioural (STAR)</div><div class="qt-desc">Tell me about a time when… — tests your past experience with real situations</div></div>
+              <div class="qt-check">✓</div>
+            </div>
+            <div class="qtype-row" data-v="Situational" onclick="selectQtype(this)">
+              <div class="qt-icon">🧠</div>
+              <div class="qt-info"><div class="qt-name">Situational</div><div class="qt-desc">What would you do if… — tests judgement and decision-making</div></div>
+              <div class="qt-check">✓</div>
+            </div>
+            <div class="qtype-row" data-v="Technical" onclick="selectQtype(this)">
+              <div class="qt-icon">⚙️</div>
+              <div class="qt-info"><div class="qt-name">Technical / Domain</div><div class="qt-desc">Role-specific knowledge questions — coding, case, finance, etc.</div></div>
+              <div class="qt-check">✓</div>
+            </div>
+            <div class="qtype-row" data-v="Self Introduction" onclick="selectQtype(this)">
+              <div class="qt-icon">👋</div>
+              <div class="qt-info"><div class="qt-name">Self-introduction</div><div class="qt-desc">Tell me about yourself — practice your opening pitch</div></div>
+              <div class="qt-check">✓</div>
+            </div>
+            <div class="qtype-row" data-v="Mixed" onclick="selectQtype(this)">
+              <div class="qt-icon">🔀</div>
+              <div class="qt-info"><div class="qt-name">Mixed</div><div class="qt-desc">Combination of all types — best for general prep</div></div>
+              <div class="qt-check">✓</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Difficulty -->
+        <div class="setup-step" id="ss3">
+          <div class="step-label">Difficulty level</div>
+          <div class="step-q">What <span style="color:var(--purple)">difficulty</span> do you prefer?</div>
+          <div class="step-hint">Determines the complexity of the questions asked.</div>
+          <div class="setting-row">
+            <div class="setting-card sel" data-v="Beginner" onclick="selectDifficulty(this)"><div class="sc-icon">🌱</div><div class="sc-title">Beginner</div><div class="sc-sub">Core basics</div></div>
+            <div class="setting-card" data-v="Intermediate" onclick="selectDifficulty(this)"><div class="sc-icon">⚙️</div><div class="sc-title">Intermediate</div><div class="sc-sub">Applied concepts</div></div>
+            <div class="setting-card" data-v="Expert" onclick="selectDifficulty(this)"><div class="sc-icon">🧠</div><div class="sc-title">Expert</div><div class="sc-sub">Advanced depth</div></div>
+          </div>
+        </div>
+
+        <!-- Step 4: Length -->
+        <div class="setup-step" id="ss4">
+          <div class="step-label">Session length</div>
+          <div class="step-q">How many <span style="color:var(--purple)">questions</span> do you want?</div>
+          <div class="step-hint">Each question takes 2–5 minutes including recording and thinking.</div>
+          <div class="setting-row">
+            <div class="setting-card sel" data-v="3" onclick="selectLen(this)"><div class="sc-icon">🏃</div><div class="sc-title">3 questions</div><div class="sc-sub">~10 min · Quick</div></div>
+            <div class="setting-card" data-v="5" onclick="selectLen(this)"><div class="sc-icon">🎯</div><div class="sc-title">5 questions</div><div class="sc-sub">~20 min · Standard</div></div>
+            <div class="setting-card" data-v="8" onclick="selectLen(this)"><div class="sc-icon">🏋️</div><div class="sc-title">8 questions</div><div class="sc-sub">~30 min · Full prep</div></div>
+          </div>
+          <div class="step-label" style="margin-top:12px">Timer per answer</div>
+          <div class="setting-row">
+            <div class="setting-card sel" data-v="on" onclick="selectTimer(this)"><div class="sc-icon">⏱️</div><div class="sc-title">Timer on</div><div class="sc-sub">2 min limit</div></div>
+            <div class="setting-card" data-v="off" onclick="selectTimer(this)"><div class="sc-icon">🔓</div><div class="sc-title">No timer</div><div class="sc-sub">Speak freely</div></div>
+          </div>
+        </div>
+
+        <!-- Step 5: Resume -->
+        <div class="setup-step" id="ss5">
+          <div class="step-label">Resume (optional)</div>
+          <div class="step-q">Paste your <span style="color:var(--purple)">resume</span> for personalised questions</div>
+          <div class="step-hint">The AI uses your background to ask questions about your actual experience. Skip if you prefer generic questions.</div>
+          <div class="resume-zone" onclick="document.getElementById('rz-input').click()">
+            <input type="file" id="rz-input" accept=".txt,.pdf,.doc,.docx" onchange="handleResumeFile(this)">
+            <span class="rz-icon">📄</span>
+            <div class="rz-title">Upload resume file</div>
+            <div class="rz-sub">PDF, DOC, TXT · or paste text below</div>
+            <div class="rz-file" id="rz-file-name" style="display:none"></div>
+          </div>
+          <button class="rz-remove" id="rz-remove-btn" onclick="removeResume()">Remove file ✕</button>
+          <textarea id="resume-paste" style="width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:12px;padding:12px 14px;color:var(--text);font-family:var(--body);font-size:.82rem;outline:none;resize:vertical;min-height:80px;line-height:1.6;transition:border-color .2s;box-sizing:border-box;margin-top:4px" placeholder="Or paste your resume text here…" onfocus="this.style.borderColor='rgba(124,111,255,.5)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'"></textarea>
+        </div>
+
+        <!-- Nav -->
+        <div class="step-nav">
+          <button class="btn btn-ghost btn-sm" id="back-btn" onclick="setupBack()" style="display:none">← Back</button>
+          <div class="step-dots">
+            <div class="sdot act" id="sd0"></div>
+            <div class="sdot" id="sd1"></div>
+            <div class="sdot" id="sd2"></div>
+            <div class="sdot" id="sd3"></div>
+            <div class="sdot" id="sd4"></div>
+          </div>
+          <button class="btn btn-primary btn-sm" id="next-btn" onclick="setupNext()" disabled style="width:auto;padding:10px 22px">Next →</button>
+        </div>
+      </div>
+
+      <!-- Skip resume option -->
+      <div style="text-align:center;margin-top:12px">
+        <button id="skip-resume-btn" style="display:none;background:transparent;border:none;color:var(--text3);font-size:.8rem;cursor:pointer;text-decoration:underline;font-family:var(--body)" onclick="setupNext()">Skip resume and start →</button>
+      </div>
+    </div>
+
+    <!-- Active session -->
+    <div id="session-active" style="display:none">
+      <div class="session-wrap">
+        <div class="session-head">
+          <div class="session-ctx">
+            <div class="sctx-chip role" id="ctx-role">Role</div>
+            <div class="sctx-chip" id="ctx-qtype">Q Type</div>
+            <div class="sctx-chip" id="ctx-timer">Timer</div>
+          </div>
+          <div class="q-count" id="q-count-display">Q 1 of 5</div>
+          <button class="end-btn" onclick="confirmEnd()">End session</button>
+        </div>
+
+        <div id="free-banner" class="free-banner" style="display:none">
+          <span>🎯 Free trial: <strong id="free-q-left">5</strong> questions left today</span>
+          <button class="upgrade-sm" onclick="PAYWALL.open()">Upgrade ↗</button>
+        </div>
+
+        <!-- Thinking -->
+        <div class="thinking" id="thinking-el" style="display:none">
+          <div class="t-dots"><div class="td"></div><div class="td"></div><div class="td"></div></div>
+          <div class="think-txt" id="think-txt">Generating your question…</div>
+        </div>
+
+        <!-- Tip bar -->
+        <div class="tip-bar" id="tip-bar"></div>
+
+        <!-- Question bubble -->
+        <div class="q-bubble" id="q-bubble" style="display:none">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div class="ai-lbl" style="margin-bottom:8px;"><div class="ai-dot"></div>AI Interviewer</div>
+            <button id="tts-btn" class="tts-btn" title="Read question aloud" aria-label="Read question aloud" onclick="toggleSpeech()">
+              <svg id="tts-icon-normal" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+              <svg id="tts-icon-speaking" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="display:none;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+            </button>
+          </div>
+          <div class="followup-tag" id="followup-tag">↩ Follow-up</div>
+          <div class="q-text" id="q-text"></div>
+        </div>
+
+        <!-- Live stats -->
+        <div class="live-panel" id="live-panel" style="display:none">
+          <div class="lstat">
+            <div class="ls-label">Words spoken</div>
+            <div class="ls-val" id="lv-words">0</div>
+          </div>
+          <div class="lstat">
+            <div class="ls-label">Pace (WPM)</div>
+            <div class="ls-val" id="lv-wpm">—</div>
+          </div>
+          <div class="lstat">
+            <div class="ls-label">Fillers</div>
+            <div class="ls-val" id="lv-fillers">0</div>
+            <div class="fchips" id="lv-fchips"></div>
+          </div>
+        </div>
+
+        <!-- Mic area -->
+        <div class="mic-area" id="mic-area" style="display:none">
+          <div class="transcript" id="transcript"><span class="ph">Click the mic and speak — your words appear here in real time…</span></div>
+          <div class="wave" id="wavebox"></div>
+          <div class="mic-row">
+            <button class="mic-btn" id="mic-btn" onclick="toggleRec()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="8" y="2" width="8" height="13" rx="4" fill="white"/><path d="M5 11c0 3.866 3.134 7 7 7s7-3.134 7-7" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/><line x1="12" y1="18" x2="12" y2="22" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="9" y1="22" x2="15" y2="22" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+            <div class="rec-status">
+              <div class="rec-label" id="rec-label">Ready to record</div>
+              <div class="rec-hint" id="rec-hint">Click mic to start speaking</div>
+            </div>
+            <div class="timer" id="timer-el" style="display:none">
+              <div class="trec" id="trec"></div>
+              <span id="timer-txt">2:00</span>
+            </div>
+          </div>
+          <div class="quality-bar">
+            <div class="ql-lbl">Quality</div>
+            <div class="ql-track"><div class="ql-fill" id="ql-fill"></div></div>
+            <div class="ql-txt" id="ql-txt">Waiting…</div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="action-row" id="action-row" style="display:none">
+          <button class="submit-btn" id="submit-btn" onclick="submitAnswer()" disabled>
+            Submit answer ↗
+          </button>
+          <button class="skip-btn" onclick="skipQ()">Skip</button>
+        </div>
+
+        <!-- Locked -->
+        <div id="locked-msg" style="display:none;flex-direction:column;align-items:center;text-align:center;padding:36px 20px;gap:12px;background:rgba(8,7,15,.7);border:1px solid rgba(124,111,255,.2);border-radius:18px">
+          <div style="font-size:2.5rem">🔒</div>
+          <div style="font-family:var(--font);font-size:1rem;font-weight:700;letter-spacing:-.03em">Free questions used up</div>
+          <div style="font-size:.82rem;color:var(--text3);max-width:280px;line-height:1.6">Upgrade to Pro for unlimited practice, full scoring, and model answers.</div>
+          <button class="btn btn-primary" onclick="showTab('tab-payment')" style="width:auto;padding:11px 24px">View plans →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div id="session-results" style="display:none">
+      <div class="results-wrap">
+        <div class="results-hd">
+          <div class="res-tag">✦ Session complete</div>
+          <div class="res-h" id="res-headline">Your results</div>
+          <div class="res-sub" id="res-sub">AI-powered scoring across 6 dimensions</div>
+        </div>
+
+        <div class="score-block">
+          <div class="ring-wrap">
+            <div class="ring-rel">
+              <svg width="180" height="180" viewBox="0 0 180 180">
+                <circle cx="90" cy="90" r="78" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="12"/>
+                <circle cx="90" cy="90" r="78" fill="none" stroke="url(#rg)" stroke-width="12" stroke-linecap="round" stroke-dasharray="490.1" id="res-arc" stroke-dashoffset="490.1" transform="rotate(-90 90 90)" style="transition:stroke-dashoffset 1.4s cubic-bezier(.22,1,.36,1)"/>
+                <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7C6FFF"/><stop offset="100%" stop-color="#00D4A0"/></linearGradient></defs>
+              </svg>
+              <div class="ring-center">
+                <div class="ring-num" id="ring-num">—</div>
+                <div class="ring-lbl">/ 100</div>
+                <div class="ring-delta" id="ring-delta" style="display:none"></div>
+              </div>
+            </div>
+          </div>
+          <div class="dim-bars" id="dim-bars"></div>
+        </div>
+
+        <div id="ai-rec" class="ai-rec" style="display:none">
+          <div class="rec-lbl">💡 AI Recommendation</div>
+          <div class="rec-txt" id="ai-rec-txt"></div>
+        </div>
+
+        <div class="sec-head" style="margin-top:14px"><div class="sec-ttl">Strengths & improvements</div><div class="sec-line"></div></div>
+        <div class="fb-grid" id="fb-grid"></div>
+
+        <div class="sec-head" style="margin-top:6px"><div class="sec-ttl">Q&A Breakdown</div><div class="sec-line"></div></div>
+        <div id="qa-list"></div>
+
+        <!-- Results feedback -->
+        <div class="res-fb">
+          <div class="rfb-title">Rate this session</div>
+          <div class="rfb-sub">Quick feedback helps us improve the AI scoring</div>
+          <div style="font-size:.72rem;color:var(--text2);margin-bottom:5px">How was the overall experience?</div>
+          <div class="rfb-stars" id="rfb-stars">
+            <div class="rfb-star" data-v="1" onclick="rateStar(1)">★</div>
+            <div class="rfb-star" data-v="2" onclick="rateStar(2)">★</div>
+            <div class="rfb-star" data-v="3" onclick="rateStar(3)">★</div>
+            <div class="rfb-star" data-v="4" onclick="rateStar(4)">★</div>
+            <div class="rfb-star" data-v="5" onclick="rateStar(5)">★</div>
+          </div>
+          <textarea class="rfb-ta" id="rfb-comment" placeholder="Any specific feedback? (optional)"></textarea>
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button class="btn btn-primary btn-sm" onclick="submitSessionFeedback()" style="width:auto">Submit feedback</button>
+          </div>
+          <div class="rfb-done" id="rfb-done">✓ Thank you for your feedback!</div>
+        </div>
+
+        <div class="upgrade-row" id="upgrade-row">
+          <div class="ur-text">🔓 Unlimited practice, full 6-D scoring & model answers — from ₹99/month</div>
+          <button class="ur-btn" onclick="showTab('tab-payment')">Upgrade →</button>
+        </div>
+
+        <div class="cta-row-res">
+          <button class="btn btn-primary" onclick="startNewSession()" style="width:auto;padding:12px 26px">Practice again →</button>
+          <button class="btn btn-ghost" onclick="copyScore()" style="padding:12px 20px">Copy score</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── TAB: FEEDBACK ── -->
+  <div id="tab-feedback" class="tab-content" style="display:none">
+    <div class="sec-tag">Share Feedback</div>
+    <div class="sec-title" style="margin-bottom:6px">Help us build<br>something worth using.</div>
+    <div class="sec-body" style="margin-bottom:32px">Not feedback about a session — feedback about OwnTheMic itself. Every response is read personally and shapes what we build next.</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
+      <!-- Feedback form -->
+      <div style="background:rgba(12,11,26,.9);border:1px solid rgba(124,111,255,.2);border-radius:22px;padding:32px">
+        <div style="font-family:var(--font);font-size:1rem;font-weight:700;letter-spacing:-.03em;margin-bottom:5px">How's your overall experience?</div>
+        <div style="font-size:.8rem;color:var(--text3);margin-bottom:20px">What's your first impression of OwnTheMic?</div>
+
+        <!-- Emoji rating -->
+        <div style="margin-bottom:22px">
+          <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;color:var(--text3);text-transform:uppercase;margin-bottom:10px">Overall feeling</div>
+          <div style="display:flex;gap:10px" id="emoji-row">
+            <button class="emoji-btn" data-val="1" onclick="selectEmoji(1)" title="Needs a lot of work" style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.03);border:1.5px solid var(--border2);font-size:1.3rem;cursor:pointer;transition:all .22s">😕</button>
+            <button class="emoji-btn" data-val="2" onclick="selectEmoji(2)" title="It's okay" style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.03);border:1.5px solid var(--border2);font-size:1.3rem;cursor:pointer;transition:all .22s">😐</button>
+            <button class="emoji-btn" data-val="3" onclick="selectEmoji(3)" title="Pretty good" style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.03);border:1.5px solid var(--border2);font-size:1.3rem;cursor:pointer;transition:all .22s">🙂</button>
+            <button class="emoji-btn" data-val="4" onclick="selectEmoji(4)" title="Really good" style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.03);border:1.5px solid var(--border2);font-size:1.3rem;cursor:pointer;transition:all .22s">😊</button>
+            <button class="emoji-btn" data-val="5" onclick="selectEmoji(5)" title="Love it!" style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.03);border:1.5px solid var(--border2);font-size:1.3rem;cursor:pointer;transition:all .22s">🤩</button>
+          </div>
+        </div>
+
+        <!-- Star ratings per aspect -->
+        <div style="margin-bottom:22px">
+          <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;color:var(--text3);text-transform:uppercase;margin-bottom:12px">Rate specific aspects</div>
+          <div style="display:flex;flex-direction:column;gap:13px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:.82rem;color:var(--text2)">Visual design</span>
+              <div class="aspect-stars" data-aspect="design" style="display:flex;gap:4px">
+                <span class="astar" data-v="1" onclick="rateAspect('design',1)">★</span>
+                <span class="astar" data-v="2" onclick="rateAspect('design',2)">★</span>
+                <span class="astar" data-v="3" onclick="rateAspect('design',3)">★</span>
+                <span class="astar" data-v="4" onclick="rateAspect('design',4)">★</span>
+                <span class="astar" data-v="5" onclick="rateAspect('design',5)">★</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:.82rem;color:var(--text2)">Ease of understanding</span>
+              <div class="aspect-stars" data-aspect="clarity" style="display:flex;gap:4px">
+                <span class="astar" data-v="1" onclick="rateAspect('clarity',1)">★</span>
+                <span class="astar" data-v="2" onclick="rateAspect('clarity',2)">★</span>
+                <span class="astar" data-v="3" onclick="rateAspect('clarity',3)">★</span>
+                <span class="astar" data-v="4" onclick="rateAspect('clarity',4)">★</span>
+                <span class="astar" data-v="5" onclick="rateAspect('clarity',5)">★</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:.82rem;color:var(--text2)">Interview question quality</span>
+              <div class="aspect-stars" data-aspect="questions" style="display:flex;gap:4px">
+                <span class="astar" data-v="1" onclick="rateAspect('questions',1)">★</span>
+                <span class="astar" data-v="2" onclick="rateAspect('questions',2)">★</span>
+                <span class="astar" data-v="3" onclick="rateAspect('questions',3)">★</span>
+                <span class="astar" data-v="4" onclick="rateAspect('questions',4)">★</span>
+                <span class="astar" data-v="5" onclick="rateAspect('questions',5)">★</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:.82rem;color:var(--text2)">AI scoring accuracy</span>
+              <div class="aspect-stars" data-aspect="scoring" style="display:flex;gap:4px">
+                <span class="astar" data-v="1" onclick="rateAspect('scoring',1)">★</span>
+                <span class="astar" data-v="2" onclick="rateAspect('scoring',2)">★</span>
+                <span class="astar" data-v="3" onclick="rateAspect('scoring',3)">★</span>
+                <span class="astar" data-v="4" onclick="rateAspect('scoring',4)">★</span>
+                <span class="astar" data-v="5" onclick="rateAspect('scoring',5)">★</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:.82rem;color:var(--text2)">Would recommend to others</span>
+              <div class="aspect-stars" data-aspect="recommend" style="display:flex;gap:4px">
+                <span class="astar" data-v="1" onclick="rateAspect('recommend',1)">★</span>
+                <span class="astar" data-v="2" onclick="rateAspect('recommend',2)">★</span>
+                <span class="astar" data-v="3" onclick="rateAspect('recommend',3)">★</span>
+                <span class="astar" data-v="4" onclick="rateAspect('recommend',4)">★</span>
+                <span class="astar" data-v="5" onclick="rateAspect('recommend',5)">★</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text fields -->
+        <div class="field" style="margin-bottom:12px">
+          <label>What's one thing that's unclear or missing?</label>
+          <textarea id="fb-missing" style="width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:12px;padding:11px 14px;color:var(--text);font-family:var(--body);font-size:.85rem;outline:none;resize:vertical;min-height:72px;line-height:1.6;transition:border-color .2s;box-sizing:border-box" placeholder="e.g. The scoring explanation wasn't clear until I scrolled far down…" onfocus="this.style.borderColor='rgba(124,111,255,.5)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'"></textarea>
+        </div>
+        <div class="field" style="margin-bottom:12px">
+          <label>What made you want to try OwnTheMic?</label>
+          <textarea id="fb-liked" style="width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:12px;padding:11px 14px;color:var(--text);font-family:var(--body);font-size:.85rem;outline:none;resize:vertical;min-height:60px;line-height:1.6;transition:border-color .2s;box-sizing:border-box" placeholder="e.g. The live filler word tracker looks really useful…" onfocus="this.style.borderColor='rgba(124,111,255,.5)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'"></textarea>
+        </div>
+        <div class="field" style="margin-bottom:16px">
+          <label>Your email (optional — only if you want us to reply)</label>
+          <input id="fb-email" type="email" placeholder="you@example.com" style="background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:12px;padding:11px 14px;color:var(--text);font-size:.85rem;outline:none;transition:border-color .2s;width:100%" onfocus="this.style.borderColor='rgba(124,111,255,.5)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'">
+        </div>
+
+        <button class="btn btn-primary" onclick="submitSiteFeedback()" id="fb-submit-btn" style="width:100%">Submit feedback →</button>
+        <div id="fb-thanks" style="display:none;align-items:center;gap:10px;padding:14px;background:rgba(0,212,160,.06);border:1px solid rgba(0,212,160,.2);border-radius:12px;margin-top:12px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="rgba(0,212,160,.15)" stroke="#00D4A0" stroke-width="1.5"/><path d="M8 12l3 3 5-5" stroke="#00D4A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div><div style="font-weight:700;color:var(--teal);font-size:.88rem">Thank you — feedback saved!</div><div style="font-size:.75rem;color:var(--text3);margin-top:2px">Every response is read personally.</div></div>
+        </div>
+      </div>
+
+      <!-- Right panel: previous feedbacks + tips -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <!-- What happens with your feedback -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px">
+          <div style="font-family:var(--font);font-size:.9rem;font-weight:700;margin-bottom:14px;letter-spacing:-.02em">What happens with your feedback?</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <div style="width:32px;height:32px;border-radius:10px;background:rgba(124,111,255,.12);border:1px solid rgba(124,111,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem">👀</div>
+              <div><div style="font-size:.82rem;font-weight:600;margin-bottom:2px">Read personally</div><div style="font-size:.76rem;color:var(--text2);line-height:1.55;font-weight:300">Every submission is read by the founders. We don't outsource this to anyone.</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <div style="width:32px;height:32px;border-radius:10px;background:rgba(0,212,160,.1);border:1px solid rgba(0,212,160,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem">🔨</div>
+              <div><div style="font-size:.82rem;font-weight:600;margin-bottom:2px">Built into the product</div><div style="font-size:.76rem;color:var(--text2);line-height:1.55;font-weight:300">Patterns in your feedback directly shape what features we build next.</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <div style="width:32px;height:32px;border-radius:10px;background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem">💬</div>
+              <div><div style="font-size:.82rem;font-weight:600;margin-bottom:2px">We reply (if you leave email)</div><div style="font-size:.76rem;color:var(--text2);line-height:1.55;font-weight:300">If you share your email, expect a personal reply within 48 hours.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Your past feedback -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px">
+          <div style="font-family:var(--font);font-size:.9rem;font-weight:700;margin-bottom:14px;letter-spacing:-.02em">Your past submissions</div>
+          <div id="past-feedback-list">
+            <div style="color:var(--text3);font-size:.8rem;text-align:center;padding:20px 0">No submissions yet · Share your first feedback →</div>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div style="background:linear-gradient(135deg,rgba(124,111,255,.08),rgba(0,212,160,.05));border:1px solid rgba(124,111,255,.18);border-radius:18px;padding:22px">
+          <div style="font-family:var(--font);font-size:.88rem;font-weight:700;margin-bottom:6px">Direct contact</div>
+          <div style="font-size:.78rem;color:var(--text2);line-height:1.6;margin-bottom:12px;font-weight:300">For urgent bugs, partnership enquiries, or college bulk licensing — reach us directly.</div>
+          <div style="font-size:.8rem;color:var(--purple);font-weight:600">✉ hello@ownthemic.app</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB: HISTORY ── -->
+  <div id="tab-history" class="tab-content" style="display:none">
+    <div class="sec-tag">Session History</div>
+    <div class="sec-title" style="margin-bottom:20px">Your past sessions</div>
+    <div id="history-list"></div>
+  </div>
+
+  <!-- ── TAB: PAYMENT ── -->
+  <div id="tab-payment" class="tab-content" style="display:none">
+    <div class="payment-wrap">
+      <div class="sec-tag">Plans & Pricing</div>
+      <div class="sec-title" style="margin-bottom:6px">Start free.<br>Level up when ready.</div>
+      <div class="sec-body">All plans include our full AI interview coaching. No hidden fees. Cancel anytime.</div>
+
+      <div class="plan-grid">
+        <!-- Free -->
+        <div class="plan-card">
+          <div class="plan-tier">Free Trial</div>
+          <div class="plan-name">Explorer</div>
+          <div class="plan-price"><span class="price-cur">₹</span><span class="price-num">0</span></div>
+          <div class="price-per">15-day trial · then limited free</div>
+          <ul class="plan-features">
+            <li>15-day full access trial</li>
+            <li>5 questions per session</li>
+            <li>Basic Confidence Score</li>
+            <li>Live filler detection</li>
+            <li>Resume upload</li>
+            <li class="dim">Full 6-dimension breakdown</li>
+            <li class="dim">Model answers</li>
+            <li class="dim">Session history</li>
+          </ul>
+          <button class="plan-btn" onclick="toast('You are on the free trial!')" id="free-plan-btn">Current plan</button>
+          <div style="text-align:center">
+            <div class="trial-pill">⏳ <span id="trial-days-left">15</span> days left</div>
+          </div>
+        </div>
+
+        <!-- Pro -->
+        <div class="plan-card featured">
+          <div class="plan-badge">MOST POPULAR</div>
+          <div class="plan-tier">Student</div>
+          <div class="plan-name">Pro</div>
+          <div class="plan-price"><span class="price-cur">₹</span><span class="price-num">99</span></div>
+          <div class="price-per">per month · billed monthly</div>
+          <ul class="plan-features">
+            <li>Unlimited sessions</li>
+            <li>Full 6-dimension scoring</li>
+            <li>Model answers per question</li>
+            <li>Session transcripts</li>
+            <li>Speech habit report</li>
+            <li>Score history & graph</li>
+            <li>Priority AI generation</li>
+            <li>Resume-aware questions</li>
+          </ul>
+          <button class="plan-btn fp" onclick="initiatePayment('pro-monthly')">Start Pro — ₹99/month</button>
+          <div class="plan-note">Cancel anytime · No lock-in</div>
+        </div>
+
+        <!-- Max -->
+        <div class="plan-card" style="border-color:rgba(0,212,160,.3)">
+          <div class="plan-badge" style="background:linear-gradient(135deg,var(--teal),#00A880);box-shadow:0 4px 14px rgba(0,212,160,.35)">BEST VALUE</div>
+          <div class="plan-tier">Annual</div>
+          <div class="plan-name">Max</div>
+          <div class="plan-price"><span class="price-cur">₹</span><span class="price-num">999</span></div>
+          <div class="price-per">per year · ~₹83/month · save ₹189</div>
+          <ul class="plan-features">
+            <li>Everything in Pro</li>
+            <li>12 months unlimited</li>
+            <li>Audio replay of sessions</li>
+            <li>Shareable score certificate</li>
+            <li>Early access to features</li>
+            <li>Priority support</li>
+            <li>Placement prep mode</li>
+            <li>Batch practice sessions</li>
+          </ul>
+          <button class="plan-btn" style="border-color:rgba(0,212,160,.4);color:var(--teal);background:rgba(0,212,160,.05)" onmouseover="this.style.background='rgba(0,212,160,.1)'" onmouseout="this.style.background='rgba(0,212,160,.05)'" onclick="initiatePayment('max-annual')">Get Max — ₹999/year</button>
+          <div class="plan-note">Save ₹189 vs monthly</div>
+        </div>
+      </div>
+
+      <!-- College / B2B -->
+      <div style="margin-top:24px;background:rgba(124,111,255,.06);border:1px solid rgba(124,111,255,.18);border-radius:20px;padding:28px 32px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+        <div style="flex:1;min-width:200px">
+          <div style="font-family:var(--font);font-size:1rem;font-weight:700;letter-spacing:-.03em;margin-bottom:5px">For Colleges & Placement Cells</div>
+          <div style="font-size:.82rem;color:var(--text2);line-height:1.6;font-weight:300">Bulk licences for 50–500 students, TPO dashboard, batch readiness analytics, and branded experience. Special placement season pricing.</div>
+        </div>
+        <button class="btn btn-ghost" onclick="toast('Contact: hello@ownthemic.app')" style="white-space:nowrap">Contact us →</button>
+      </div>
+
+      <!-- FAQ -->
+      <div style="margin-top:36px">
+        <div style="font-family:var(--font);font-size:1.1rem;font-weight:700;letter-spacing:-.04em;margin-bottom:18px">Frequently asked</div>
+        <div id="faq-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB: SETTINGS ── -->
+  <div id="tab-settings" class="tab-content" style="display:none">
+    <div class="sec-tag">Settings</div>
+    <div class="sec-title" style="margin-bottom:24px">Account & preferences</div>
+
+    <!-- Profile -->
+    <div class="settings-section">
+      <h3>👤 Your Profile</h3>
+      <div class="profile-field">
+        <div class="field"><label>Name</label><input id="set-name" type="text" placeholder="Your name"></div>
+        <div class="field"><label>Email / Phone</label><input id="set-email" type="text" placeholder="Email or phone"></div>
+        <div class="field"><label>College</label><input id="set-college" type="text" placeholder="Your college"></div>
+        <div class="field"><label>Age</label><input id="set-age" type="number" placeholder="Age"></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="saveProfile()" style="width:auto;margin-top:6px">Save profile</button>
+    </div>
+
+    <!-- API Key -->
+    <div class="settings-section">
+      <h3>🔑 AI API Key</h3>
+      <div style="font-size:.82rem;color:var(--text2);line-height:1.6;margin-bottom:16px">OwnTheMic uses your own free API key to generate questions and score your answers. Your key is stored locally in your browser only — never on our servers.</div>
+      <div class="provider-tabs" id="settings-ptabs">
+        <button class="ptab act" onclick="settingsTab('gemini',this)">✨ Gemini</button>
+        <button class="ptab" onclick="settingsTab('groq',this)">⚡ Groq</button>
+        <button class="ptab" onclick="settingsTab('openrouter',this)">🔀 OpenRouter</button>
+      </div>
+      <div id="set-prov-gemini" class="set-prov">
+        <div style="font-size:.75rem;color:var(--text2);margin-bottom:8px;line-height:1.5">Free: 15 req/min · 1,500/day · <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:var(--purple)">Get key at aistudio.google.com</a></div>
+        <div class="api-key-field"><input id="set-key-gemini" class="api-key-input" type="password" placeholder="AIzaSy…"><button class="btn btn-ghost btn-sm" onclick="testKey('gemini')">Test</button><button class="btn btn-primary btn-sm" onclick="saveKey('gemini')">Save</button></div>
+      </div>
+      <div id="set-prov-groq" class="set-prov" style="display:none">
+        <div style="font-size:.75rem;color:var(--text2);margin-bottom:8px;line-height:1.5">Free: 30 req/min · 14,400/day · Fastest · <a href="https://console.groq.com/keys" target="_blank" style="color:var(--purple)">Get key at console.groq.com</a></div>
+        <div class="api-key-field"><input id="set-key-groq" class="api-key-input" type="password" placeholder="gsk_…"><button class="btn btn-ghost btn-sm" onclick="testKey('groq')">Test</button><button class="btn btn-primary btn-sm" onclick="saveKey('groq')">Save</button></div>
+      </div>
+      <div id="set-prov-openrouter" class="set-prov" style="display:none">
+        <div style="font-size:.75rem;color:var(--text2);margin-bottom:8px;line-height:1.5">Free: 20 req/min · 50/day · <a href="https://openrouter.ai/keys" target="_blank" style="color:var(--purple)">Get key at openrouter.ai</a></div>
+        <div class="api-key-field"><input id="set-key-openrouter" class="api-key-input" type="password" placeholder="sk-or-…"><button class="btn btn-ghost btn-sm" onclick="testKey('openrouter')">Test</button><button class="btn btn-primary btn-sm" onclick="saveKey('openrouter')">Save</button></div>
+      </div>
+      <div id="set-test-result" class="test-result" style="margin-top:8px"></div>
+      <div style="margin-top:12px;font-size:.72rem;color:var(--text3);padding:10px 13px;background:rgba(255,255,255,.02);border-radius:9px;border:1px solid var(--border)">
+        🔒 <strong style="color:var(--text2)">Privacy:</strong> Keys are stored only in your browser's localStorage. All AI calls go directly from your browser to the AI provider — never through our servers.
+      </div>
+    </div>
+
+    <!-- Danger zone -->
+    <div class="settings-section" style="border-color:rgba(255,107,74,.15)">
+      <h3>⚠️ Account</h3>
+      <div class="setting-row2">
+        <div><div class="sr-label">Clear all session data</div><div class="sr-sub">Removes your history from this device</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="clearData()" style="border-color:rgba(255,107,74,.3);color:var(--coral)">Clear data</button>
+      </div>
+      <div class="setting-row2">
+        <div><div class="sr-label">Sign out</div><div class="sr-sub">You'll need to sign in again</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="AUTH.logout()">Sign out</button>
+      </div>
+    </div>
+  </div>
+</div><!-- end main-content -->
+</div><!-- end dash-layout -->
+</div><!-- end pg-dashboard -->
+
+<!-- ═══════════════════════════════════
+     PAYWALL MODAL
+═══════════════════════════════════ -->
+<div id="paywall-modal" class="modal-wrap">
+  <div class="modal-backdrop" onclick="PAYWALL.close()"></div>
+  <div class="modal-shell">
+    <button class="modal-x" onclick="PAYWALL.close()">✕</button>
+    <div class="pw-tag">🔒 Upgrade to unlock more</div>
+    <div class="pw-title">You've used your free questions</div>
+    <div class="pw-body">Upgrade for unlimited practice, full AI scoring, and model answers for every question.</div>
+    <div class="pw-feats">
+      <div class="pw-feat"><span>♾️</span><span><strong>Unlimited questions</strong> — no resets, no waiting</span></div>
+      <div class="pw-feat"><span>📊</span><span><strong>Full 6-dimension score</strong> — deep breakdown every session</span></div>
+      <div class="pw-feat"><span>⭐</span><span><strong>Model answers</strong> — STAR-format answer for every question</span></div>
+      <div class="pw-feat"><span>📈</span><span><strong>Score history</strong> — track improvement over time</span></div>
+    </div>
+    <div class="pw-pr"><span class="pw-cur">₹</span><span class="pw-num">99</span><span class="pw-per">/month</span></div>
+    <div class="pw-note">💡 Best value: ₹999/year · save ₹189 · ~₹83/month</div>
+    <button class="pw-pay" onclick="initiatePayment('pro-monthly')">🚀 Start Pro — ₹99/month</button>
+    <button class="pw-pay2" onclick="initiatePayment('max-annual')">Get Max — ₹999/year</button>
+    <div class="pw-secure">🔐 Payment via Razorpay · Secure · Cancel anytime</div>
+  </div>
+</div>
+
+

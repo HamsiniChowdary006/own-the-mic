@@ -1,0 +1,458 @@
+[
+    {
+        "question": "Can you explain what an induction machine is and where it is commonly used?",
+        "category": "Electrical Machines",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "Why is a three-phase induction motor called a self-starting machine?",
+        "category": "Electrical Machines",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "Why is a single-phase induction motor not self-starting?",
+        "category": "Electrical Machines",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "What are the main parts of an induction motor? Explain the functions of the stator and rotor.",
+        "category": "Electrical Machines",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "What is synchronous speed, and how is it calculated?",
+        "category": "Electrical Machines",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "What do you mean by slip in an induction motor?",
+        "category": "Electrical Machines",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "What are the different types of motor starters?",
+        "category": "Electrical Machines",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "Explain the working principle of a Direct-On-Line (DOL) starter.",
+        "category": "Electrical Machines",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "What is a Star-Delta starter, and where is it commonly used?",
+        "category": "Electrical Machines",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "What is inrush current, and why does it occur during motor starting?",
+        "category": "Electrical Machines",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "Compare a DOL starter and a Star-Delta starter. When would you choose one over the other?",
+        "category": "Electrical Machines",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "Explain how a Star-Delta starter reduces the starting current.",
+        "category": "Electrical Machines",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "Explain the relationship between synchronous speed, rotor speed and slip.",
+        "category": "Electrical Machines",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "Differentiate between synchronous and asynchronous machines.",
+        "category": "Electrical Machines",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "Why is slip necessary for torque production?",
+        "category": "Electrical Machines",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "Explain the working principle of a turbo alternator.",
+        "category": "Electrical Machines",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "Where are turbo alternators commonly used?",
+        "category": "Electrical Machines",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "Why can't an induction motor run exactly at synchronous speed?",
+        "category": "Electrical Machines",
+        "difficulty": "Expert",
+        "type": "Technical"
+    },
+    {
+        "question": "How would you reduce the starting current of a large industrial motor?",
+        "category": "Electrical Machines",
+        "difficulty": "Expert",
+        "type": "Technical"
+    },
+    {
+        "question": "Compare squirrel cage and slip ring induction motors with practical applications.",
+        "category": "Electrical Machines",
+        "difficulty": "Expert",
+        "type": "Technical"
+    },
+    {
+        "question": "Explain the efficiency characteristics of induction motors.",
+        "category": "Electrical Machines",
+        "difficulty": "Expert",
+        "type": "Technical"
+    },
+    {
+        "question": "What is a transformer?",
+        "category": "Transformers",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "Explain the difference between a step-up and a step-down transformer.",
+        "category": "Transformers",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "Where are step-up and step-down transformers used?",
+        "category": "Transformers",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "Why do transformers operate only on AC?",
+        "category": "Transformers",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "Why is transformer operation dependent on frequency?",
+        "category": "Transformers",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "Explain the working principle of a transformer.",
+        "category": "Transformers",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "What are transformer losses?",
+        "category": "Transformers",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "Why is electrical power transmitted at higher voltages?",
+        "category": "Transformers",
+        "difficulty": "Expert",
+        "type": "Technical"
+    },
+    {
+        "question": "Why don't generators directly produce transmission-level voltages?",
+        "category": "Transformers",
+        "difficulty": "Expert",
+        "type": "Technical"
+    },
+    {
+        "question": "Explain the basic structure of an electrical power system.",
+        "category": "Power Systems",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "What is a single-line diagram?",
+        "category": "Power Systems",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "Compare overhead and underground transmission systems.",
+        "category": "Power Systems",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "Which transmission method is more reliable and why?",
+        "category": "Power Systems",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "Explain the technical and economic reasons for transmitting power at high voltages.",
+        "category": "Power Systems",
+        "difficulty": "Expert",
+        "type": "Technical"
+    },
+    {
+        "question": "What role do transformers play in power transmission?",
+        "category": "Power Systems",
+        "difficulty": "Expert",
+        "type": "Technical"
+    },
+    {
+        "question": "What is electrical protection?",
+        "category": "Protection",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "What is a fuse?",
+        "category": "Protection",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "What is an MCB?",
+        "category": "Protection",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "Compare a Fuse and an MCB.",
+        "category": "Protection",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "Which protection methods are commonly used for alternators?",
+        "category": "Protection",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "Which is more suitable for industrial applications: Fuse or MCB? Justify your answer.",
+        "category": "Protection",
+        "difficulty": "Expert",
+        "type": "Technical"
+    },
+    {
+        "question": "What is a rectifier?",
+        "category": "Power Electronics",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "What is an SCR?",
+        "category": "Power Electronics",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "What is Power Electronics?",
+        "category": "Power Electronics",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "Why is an SCR called a controlled rectifier?",
+        "category": "Power Electronics",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "Explain the working principle of an SCR.",
+        "category": "Power Electronics",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "Where are SCRs commonly used?",
+        "category": "Power Electronics",
+        "difficulty": "Expert",
+        "type": "Technical"
+    },
+    {
+        "question": "What is a cycloconverter and where is it used?",
+        "category": "Power Electronics",
+        "difficulty": "Expert",
+        "type": "Technical"
+    },
+    {
+        "question": "What is voltage?",
+        "category": "Basic Electrical Engineering",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "What is potential difference?",
+        "category": "Basic Electrical Engineering",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "Are voltage and potential difference the same?",
+        "category": "Basic Electrical Engineering",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "What is an inductor?",
+        "category": "Basic Electrical Engineering",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "What is a capacitor?",
+        "category": "Basic Electrical Engineering",
+        "difficulty": "Beginner",
+        "type": "Technical"
+    },
+    {
+        "question": "What is power factor?",
+        "category": "Basic Electrical Engineering",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "What is unity power factor?",
+        "category": "Basic Electrical Engineering",
+        "difficulty": "Intermediate",
+        "type": "Technical"
+    },
+    {
+        "question": "Explain the Skin Effect.",
+        "category": "Basic Electrical Engineering",
+        "difficulty": "Expert",
+        "type": "Technical"
+    },
+    {
+        "question": "Explain the Ferranti Effect.",
+        "category": "Basic Electrical Engineering",
+        "difficulty": "Expert",
+        "type": "Technical"
+    },
+    {
+        "question": "Please explain your project.",
+        "category": "Projects",
+        "difficulty": "Any",
+        "type": "Mixed"
+    },
+    {
+        "question": "Why did you choose this project?",
+        "category": "Projects",
+        "difficulty": "Any",
+        "type": "Mixed"
+    },
+    {
+        "question": "What was your role in the project?",
+        "category": "Projects",
+        "difficulty": "Any",
+        "type": "Mixed"
+    },
+    {
+        "question": "What challenges did you face?",
+        "category": "Projects",
+        "difficulty": "Any",
+        "type": "Mixed"
+    },
+    {
+        "question": "How would you improve your project if given more time?",
+        "category": "Projects",
+        "difficulty": "Any",
+        "type": "Mixed"
+    },
+    {
+        "question": "Please introduce yourself.",
+        "category": "Intro",
+        "difficulty": "Any",
+        "type": "Self Introduction"
+    },
+    {
+        "question": "Walk me through your resume.",
+        "category": "Intro",
+        "difficulty": "Any",
+        "type": "Self Introduction"
+    },
+    {
+        "question": "Tell me about your academic journey.",
+        "category": "Intro",
+        "difficulty": "Any",
+        "type": "Self Introduction"
+    },
+    {
+        "question": "Why did you choose Electrical Engineering?",
+        "category": "HR",
+        "difficulty": "Any",
+        "type": "Behavioural (STAR)"
+    },
+    {
+        "question": "Why should we hire you?",
+        "category": "HR",
+        "difficulty": "Any",
+        "type": "Behavioural (STAR)"
+    },
+    {
+        "question": "What does being an engineer mean to you?",
+        "category": "HR",
+        "difficulty": "Any",
+        "type": "Behavioural (STAR)"
+    },
+    {
+        "question": "Tell me about a challenging situation you handled.",
+        "category": "HR",
+        "difficulty": "Any",
+        "type": "Behavioural (STAR)"
+    },
+    {
+        "question": "Describe a time you worked in a team.",
+        "category": "HR",
+        "difficulty": "Any",
+        "type": "Behavioural (STAR)"
+    },
+    {
+        "question": "What are your strengths?",
+        "category": "HR",
+        "difficulty": "Any",
+        "type": "Behavioural (STAR)"
+    },
+    {
+        "question": "What are your weaknesses?",
+        "category": "HR",
+        "difficulty": "Any",
+        "type": "Behavioural (STAR)"
+    },
+    {
+        "question": "Are you willing to relocate?",
+        "category": "HR",
+        "difficulty": "Any",
+        "type": "Behavioural (STAR)"
+    },
+    {
+        "question": "Would you choose higher studies or a job? Why?",
+        "category": "HR",
+        "difficulty": "Any",
+        "type": "Behavioural (STAR)"
+    },
+    {
+        "question": "Which is more important to you: salary or job satisfaction? Explain your answer.",
+        "category": "HR",
+        "difficulty": "Any",
+        "type": "Behavioural (STAR)"
+    }
+]

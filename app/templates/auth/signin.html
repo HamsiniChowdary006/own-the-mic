@@ -1,0 +1,21 @@
+
+<div id="pg-signin" class="page">
+<div class="auth-wrap">
+<div class="auth-card" style="max-width:420px;margin:0 auto">
+  <div class="auth-logo">
+    <div class="auth-logo-icon">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="8" y="2" width="8" height="13" rx="4" fill="white"/><path d="M5 11c0 3.866 3.134 7 7 7s7-3.134 7-7" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/><line x1="12" y1="18" x2="12" y2="22" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="9" y1="22" x2="15" y2="22" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+    <div class="auth-logo-text">Own<em>The</em>Mic</div>
+  </div>
+  <div class="auth-title">Welcome back</div>
+  <div class="auth-sub">Sign in to continue your practice</div>
+  <div id="signin-err" class="err-banner"></div>
+  <div class="field"><label>Name</label><input id="si-name" type="text" placeholder="Your registered name" autocomplete="name" onkeydown="if(event.key==='Enter')document.getElementById('si-pass').focus()"></div>
+  <div class="field"><label>Password</label><input id="si-pass" type="password" placeholder="Your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')AUTH.login()"></div>
+  <button class="btn btn-primary" onclick="AUTH.login()" style="margin-top:8px">Sign in →</button>
+  <div class="auth-switch">New here? <a onclick="showPage('pg-signup')">Create account</a> · <a onclick="AUTH.demo()" style="color:var(--teal)">Try demo</a></div>
+</div>
+</div>
+</div>
+
