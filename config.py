@@ -1,7 +1,24 @@
 import os
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+
 from dotenv import load_dotenv
 
 load_dotenv()
+
+
+def normalize_database_url(database_url):
+    """Remove connection options unsupported by the selected DBAPI driver."""
+    if not database_url:
+        return database_url
+
+    parsed_url = urlsplit(database_url)
+    query = [
+        (key, value)
+        for key, value in parse_qsl(parsed_url.query, keep_blank_values=True)
+        if key.lower() != 'pgbouncer'
+    ]
+    return urlunsplit(parsed_url._replace(query=urlencode(query)))
+
 
 class Config:
     # Essential Flask Configurations
@@ -12,6 +29,7 @@ class Config:
     DATABASE_URL = os.environ.get('DATABASE_URL')
     if DATABASE_URL and DATABASE_URL.startswith('postgres://'):
         DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
+    DATABASE_URL = normalize_database_url(DATABASE_URL)
     SQLALCHEMY_DATABASE_URI = DATABASE_URL
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
