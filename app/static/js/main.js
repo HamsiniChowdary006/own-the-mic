@@ -32,7 +32,14 @@ function showTab(id){
   if(sl)sl.classList.add('active');
   window.scrollTo(0,0);
   if(id==='tab-history')renderHistory();
-  if(id==='tab-feedback')renderFeedbackTab();
+  if(id==='tab-feedback') {
+    history.pushState(null, '', '/feedback');
+    renderFeedbackTab();
+  } else {
+    if (window.location.pathname === '/feedback') {
+      history.pushState(null, '', '/');
+    }
+  }
   if(id==='tab-settings')loadSettings();
   if(id==='tab-session'){
     setupState.step=0;
@@ -40,9 +47,9 @@ function showTab(id){
     document.getElementById('session-active').style.display='none';
     document.getElementById('session-results').style.display='none';
     refreshSetupStep();
-
   }
 }
+
 
 /* ════════════════════════════════════════════════════
    AUTH
@@ -125,8 +132,21 @@ const AUTH=(function(){
   }
 
   function loginUser(user){
-    updateNav(user);showPage('pg-dashboard');showTab('tab-home');updateHomeStats();buildFaq();
+    updateNav(user);
+    showPage('pg-dashboard');
+    const redirectPath = sessionStorage.getItem('otm_redirect_path') || window.location.pathname;
+    sessionStorage.removeItem('otm_redirect_path');
+    if (redirectPath === '/feedback') {
+      showTab('tab-feedback');
+      history.pushState(null, '', '/feedback');
+    } else {
+      showTab('tab-home');
+      history.pushState(null, '', '/');
+    }
+    updateHomeStats();
+    buildFaq();
   }
+
 
   function logout(){LS.del(CK);LS.del(TK);showPage('pg-signin');}
 
@@ -844,58 +864,395 @@ function hide(id){const el=document.getElementById(id);if(el)el.style.display='n
 
 
 /* ════ SITE FEEDBACK ════ */
-const SITE_FB_STATE={overall:0,aspects:{}};
-
-function selectEmoji(val){
-  SITE_FB_STATE.overall=val;
-  document.querySelectorAll('.emoji-btn').forEach(b=>{
-    b.classList.remove('sel');
-    b.style.borderColor='rgba(255,255,255,.1)';
-    b.style.background='rgba(255,255,255,.03)';
-    b.style.transform='';
-  });
-  const sel=document.querySelector('.emoji-btn[data-val="'+val+'"]');
-  if(sel)sel.classList.add('sel');
-}
-
-function rateAspect(aspect,val){
-  SITE_FB_STATE.aspects[aspect]=val;
-  const row=document.querySelector('.aspect-stars[data-aspect="'+aspect+'"]');
-  if(!row)return;
-  row.querySelectorAll('.astar').forEach((s,i)=>s.classList.toggle('lit',i<val));
-}
-
-function submitSiteFeedback(){
-  const missing=(document.getElementById('fb-missing')||{}).value?.trim()||'';
-  const liked=(document.getElementById('fb-liked')||{}).value?.trim()||'';
-  const email=(document.getElementById('fb-email')||{}).value?.trim()||'';
-  const user=AUTH.getUser();
-  const fb={ts:new Date().toISOString(),uid:user?.uid,name:user?.name,overall:SITE_FB_STATE.overall,aspects:{...SITE_FB_STATE.aspects},missing,liked,email};
-  const existing=LS.get('otm_site_feedback',[]);existing.push(fb);LS.set('otm_site_feedback',existing);
-  const btn=document.getElementById('fb-submit-btn');if(btn)btn.style.display='none';
-  const thanks=document.getElementById('fb-thanks');if(thanks)thanks.style.display='flex';
-  toast('Thank you! Feedback saved ✓');
-  renderFeedbackTab();
-}
-
-function renderFeedbackTab(){
-  const user=AUTH.getUser();if(!user)return;
-  const all=LS.get('otm_site_feedback',[]).filter(f=>f.uid===user.uid).reverse();
-  const el=document.getElementById('past-feedback-list');if(!el)return;
-  if(!all.length){
-    el.innerHTML=`<div class="empty-state" style="padding: var(--space-md) 0;">
-      <div class="empty-state-icon" style="font-size: 2rem;">💬</div>
-      <div class="empty-state-title" style="font-size: 0.9rem;">No feedback shared yet</div>
-      <div class="empty-state-desc" style="font-size: 0.78rem;">Your submissions will appear here. Share your first feedback to help us grow!</div>
-    </div>`;
-    return;
+const surveyQuestions = [
+  {
+    id: 'challenge',
+    title: 'What challenge were you hoping OwnTheMic would help you with?',
+    type: 'checkbox',
+    options: [
+      { value: 'Fear of interviews', label: 'Fear of interviews' },
+      { value: 'Speaking confidently', label: 'Speaking confidently' },
+      { value: 'Answering better', label: 'Answering better' },
+      { value: 'Improving communication', label: 'Improving communication' },
+      { value: 'other', label: 'Other', hasInput: true }
+    ],
+    required: true
+  },
+  {
+    id: 'ai_feedback_helpful',
+    title: 'Did the AI feedback help you improve your response?',
+    type: 'radio',
+    options: [
+      { value: 'Yes', label: 'Yes' },
+      { value: 'Somewhat', label: 'Somewhat' },
+      { value: 'No', label: 'No' }
+    ],
+    required: true
+  },
+  {
+    id: 'most_valuable_feedback',
+    title: 'Which part of the feedback was most valuable?',
+    type: 'checkbox',
+    options: [
+      { value: 'Voice & tone', label: 'Voice & tone' },
+      { value: 'Content quality', label: 'Content quality' },
+      { value: 'Filler words', label: 'Filler words' },
+      { value: 'Confidence', label: 'Confidence' },
+      { value: 'Overall suggestions', label: 'Overall suggestions' },
+      { value: 'other', label: 'Other', hasInput: true }
+    ],
+    required: true
+  },
+  {
+    id: 'confusing_inaccurate_unnecessary',
+    title: 'Was anything confusing, inaccurate, or unnecessary?',
+    type: 'textarea',
+    placeholder: 'e.g. The scoring explanation wasn\'t clear until I scrolled far down…',
+    required: false
+  },
+  {
+    id: 'would_use_again',
+    title: 'Would you use OwnTheMic again before your next interview?',
+    type: 'radio',
+    options: [
+      { value: 'Definitely', label: 'Definitely' },
+      { value: 'Maybe', label: 'Maybe' },
+      { value: 'No', label: 'No' }
+    ],
+    required: true
+  },
+  {
+    id: 'desired_improvement',
+    title: 'What\'s the one feature or improvement that would make OwnTheMic even more valuable to you?',
+    type: 'textarea',
+    placeholder: 'e.g. The live filler word tracker looks really useful…',
+    required: false
+  },
+  {
+    id: 'pro_interest',
+    title: 'If OwnTheMic offered a Pro version with advanced interview practice and personalised feedback, would you consider paying for it?',
+    type: 'radio',
+    options: [
+      { value: 'Yes', label: 'Yes' },
+      { value: 'Maybe', label: 'Maybe' },
+      { value: 'No', label: 'No' }
+    ],
+    required: true
   }
-  el.innerHTML=all.map(f=>{
-    const emojis=['','😕','😐','🙂','😊','🤩'];
-    const date=new Date(f.ts).toLocaleDateString('en-IN',{day:'numeric',month:'short'});
-    return '<div style="padding:12px 0;border-bottom:1px solid var(--border)"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px"><span style="font-size:1.1rem">'+(emojis[f.overall]||'—')+'</span><span style="font-size:.7rem;color:var(--text3)">'+date+'</span></div>'+(f.missing?'<div style="font-size:.77rem;color:var(--text2);line-height:1.5;margin-top:3px">'+f.missing+'</div>':'')+'</div>';
-  }).join('')+'';
+];
+
+let surveyCurrentStep = 0;
+let surveyAnswers = {};
+let surveySubmitted = false;
+
+async function checkSurveyStatus() {
+  const token = AUTH.getToken();
+  if (!token) return;
+  try {
+    const res = await fetch('/api/feedback/pilot/status', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const d = await res.json();
+    surveySubmitted = !!d.submitted;
+  } catch(e) {
+    console.error('Error fetching survey status:', e);
+  }
 }
+
+async function renderFeedbackTab() {
+  const user = AUTH.getUser();
+  if (!user) return;
+
+  await checkSurveyStatus();
+
+  const intro = document.getElementById('survey-intro-view');
+  const wizard = document.getElementById('survey-wizard-view');
+  const success = document.getElementById('survey-success-view');
+
+  if (surveySubmitted) {
+    if (intro) intro.style.display = 'none';
+    if (wizard) wizard.style.display = 'none';
+    if (success) success.style.display = 'block';
+  } else {
+    if (intro) intro.style.display = 'block';
+    if (wizard) wizard.style.display = 'none';
+    if (success) success.style.display = 'none';
+  }
+}
+
+function startSurvey() {
+  surveyCurrentStep = 0;
+  surveyAnswers = {};
+  showSurveyStep();
+}
+
+function showSurveyStep() {
+  const intro = document.getElementById('survey-intro-view');
+  const wizard = document.getElementById('survey-wizard-view');
+  const success = document.getElementById('survey-success-view');
+
+  if (intro) intro.style.display = 'none';
+  if (success) success.style.display = 'none';
+  if (wizard) wizard.style.display = 'block';
+
+  const q = surveyQuestions[surveyCurrentStep];
+  const stepsCount = surveyQuestions.length;
+
+  // Update headers & progress bar
+  const stepTitle = document.getElementById('survey-step-title');
+  if (stepTitle) stepTitle.textContent = `Question ${surveyCurrentStep + 1} of ${stepsCount}`;
+  
+  const stepPct = document.getElementById('survey-step-pct');
+  const pct = Math.round(((surveyCurrentStep + 1) / stepsCount) * 100);
+  if (stepPct) stepPct.textContent = `${pct}% completed`;
+
+  const progBar = document.getElementById('survey-progress-bar');
+  if (progBar) progBar.style.width = `${pct}%`;
+
+  const prevBtn = document.getElementById('survey-prev-btn');
+  if (prevBtn) prevBtn.style.display = surveyCurrentStep > 0 ? 'inline-flex' : 'none';
+
+  const nextBtn = document.getElementById('survey-next-btn');
+  if (nextBtn) {
+    if (surveyCurrentStep === stepsCount - 1) {
+      nextBtn.textContent = 'Submit Feedback';
+    } else {
+      nextBtn.textContent = 'Next →';
+    }
+  }
+
+  // Render active question HTML
+  const area = document.getElementById('survey-question-area');
+  if (!area) return;
+
+  area.innerHTML = buildQuestionHTML(q);
+  validateSurveyStep();
+}
+
+function buildQuestionHTML(q) {
+  let html = `<div style="font-family:var(--font); font-size:1.1rem; font-weight:700; letter-spacing:-.02em; margin-bottom:20px; color:var(--text);">${q.title}</div>`;
+
+  if (q.type === 'checkbox' || q.type === 'radio') {
+    html += `<div style="display:flex; flex-direction:column; gap:12px;">`;
+    q.options.forEach((opt, idx) => {
+      const isSelected = isOptionSelected(q.id, opt.value);
+      const isOther = opt.hasInput;
+      const otherText = isOther ? (surveyAnswers[q.id + '_other'] || '') : '';
+      
+      html += `
+        <div class="survey-option-card ${isSelected ? 'sel' : ''}" 
+             onclick="selectSurveyOption('${q.id}', '${opt.value}', ${q.type === 'radio' ? 'true' : 'false'}, ${isOther ? 'true' : 'false'})" 
+             style="background:rgba(255,255,255,.03); border:1.5px solid ${isSelected ? 'var(--color-primary)' : 'var(--border2)'}; border-radius:var(--radius-sm); padding:16px 20px; cursor:pointer; transition:all .2s; display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <input type="${q.type}" name="${q.id}" value="${opt.value}" ${isSelected ? 'checked' : ''} style="accent-color:var(--purple); width:18px; height:18px; cursor:pointer;" onclick="event.stopPropagation(); selectSurveyOption('${q.id}', '${opt.value}', ${q.type === 'radio' ? 'true' : 'false'}, ${isOther ? 'true' : 'false'})">
+            <span style="font-size:0.9rem; color:var(--text2); font-weight:500;">${opt.label}</span>
+          </div>
+          ${isOther && isSelected ? `
+            <div onclick="event.stopPropagation();" style="margin-top:6px;">
+              <input type="text" id="${q.id}-other-input" 
+                     placeholder="Please specify..." 
+                     value="${otherText}" 
+                     oninput="updateSurveyOtherInput('${q.id}', this.value)"
+                     style="background:rgba(255,255,255,.04); border:1px solid var(--border2); border-radius:var(--radius-xs); padding:8px 12px; color:var(--text); font-size:0.85rem; outline:none; width:100%; box-sizing:border-box;">
+            </div>
+          ` : ''}
+        </div>
+      `;
+    });
+    html += `</div>`;
+  } else if (q.type === 'textarea') {
+    const val = surveyAnswers[q.id] || '';
+    html += `
+      <div class="field">
+        <textarea id="${q.id}-textarea" 
+                  placeholder="${q.placeholder || ''}" 
+                  oninput="updateSurveyTextarea('${q.id}', this.value)"
+                  style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--border2); border-radius:var(--radius-sm); padding:14px; color:var(--text); font-family:var(--body); font-size:.88rem; outline:none; resize:vertical; min-height:120px; line-height:1.6; transition:border-color .2s; box-sizing:border-box;">${val}</textarea>
+      </div>
+    `;
+  }
+
+  // Handle Q7 Conditional pricing follow up
+  if (q.id === 'pro_interest') {
+    const selVal = surveyAnswers[q.id];
+    const showPrice = selVal === 'Yes' || selVal === 'Maybe';
+    const isPriceYes = surveyAnswers['pro_price_interest'] === 'Yes';
+    const isPriceNo = surveyAnswers['pro_price_interest'] === 'No';
+    
+    html += `
+      <div id="pro-price-conditional" style="margin-top:24px; padding-top:20px; border-top:1px dashed rgba(255,255,255,0.1); display:${showPrice ? 'block' : 'none'};">
+        <div style="font-family:var(--font); font-size:0.95rem; font-weight:700; margin-bottom:12px; color:var(--text);">If yes, would you consider a fair monthly price of ₹99–129?</div>
+        <div style="display:flex; gap:12px;">
+          <div class="survey-option-card ${isPriceYes ? 'sel' : ''}" 
+               onclick="selectConditionalPrice('Yes')" 
+               style="flex:1; text-align:center; padding:12px; border:1.5px solid ${isPriceYes ? 'var(--color-primary)' : 'var(--border2)'}; border-radius:var(--radius-sm); background:rgba(255,255,255,.02); cursor:pointer; font-size:0.85rem; font-weight:600; color:var(--text2);">
+            Yes
+          </div>
+          <div class="survey-option-card ${isPriceNo ? 'sel' : ''}" 
+               onclick="selectConditionalPrice('No')" 
+               style="flex:1; text-align:center; padding:12px; border:1.5px solid ${isPriceNo ? 'var(--color-primary)' : 'var(--border2)'}; border-radius:var(--radius-sm); background:rgba(255,255,255,.02); cursor:pointer; font-size:0.85rem; font-weight:600; color:var(--text2);">
+            No
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  return html;
+}
+
+function isOptionSelected(fieldId, value) {
+  const current = surveyAnswers[fieldId];
+  if (!current) return false;
+  if (Array.isArray(current)) {
+    return current.includes(value);
+  }
+  return current === value;
+}
+
+function selectSurveyOption(fieldId, value, isSingleSelect, isOther) {
+  if (isSingleSelect) {
+    surveyAnswers[fieldId] = value;
+    if (fieldId === 'pro_interest') {
+      if (value !== 'Yes' && value !== 'Maybe') {
+        delete surveyAnswers['pro_price_interest'];
+      }
+    }
+  } else {
+    if (!surveyAnswers[fieldId]) surveyAnswers[fieldId] = [];
+    const idx = surveyAnswers[fieldId].indexOf(value);
+    if (idx > -1) {
+      surveyAnswers[fieldId].splice(idx, 1);
+      if (isOther) {
+        delete surveyAnswers[fieldId + '_other'];
+      }
+    } else {
+      surveyAnswers[fieldId].push(value);
+    }
+  }
+
+  // Rerender active step to update UI state, keeping conditional display check
+  showSurveyStep();
+}
+
+function updateSurveyOtherInput(fieldId, value) {
+  surveyAnswers[fieldId + '_other'] = value;
+  validateSurveyStep();
+}
+
+function updateSurveyTextarea(fieldId, value) {
+  surveyAnswers[fieldId] = value;
+  validateSurveyStep();
+}
+
+function selectConditionalPrice(value) {
+  surveyAnswers['pro_price_interest'] = value;
+  showSurveyStep();
+}
+
+function validateSurveyStep() {
+  const q = surveyQuestions[surveyCurrentStep];
+  const nextBtn = document.getElementById('survey-next-btn');
+  if (!nextBtn) return;
+
+  let isValid = true;
+  if (q.required) {
+    const val = surveyAnswers[q.id];
+    if (!val || (Array.isArray(val) && val.length === 0)) {
+      isValid = false;
+    } else {
+      // Check other option input
+      if (Array.isArray(val) && val.includes('other')) {
+        const otherVal = surveyAnswers[q.id + '_other'] || '';
+        if (!otherVal.trim()) {
+          isValid = false;
+        }
+      }
+      
+      // Question 7 Pro interest conditional price validation
+      if (q.id === 'pro_interest' && (val === 'Yes' || val === 'Maybe')) {
+        const priceInterest = surveyAnswers['pro_price_interest'];
+        if (!priceInterest) {
+          isValid = false;
+        }
+      }
+    }
+  }
+
+  nextBtn.disabled = !isValid;
+}
+
+function prevSurveyStep() {
+  if (surveyCurrentStep > 0) {
+    surveyCurrentStep--;
+    showSurveyStep();
+  }
+}
+
+async function nextSurveyStep() {
+  const stepsCount = surveyQuestions.length;
+  if (surveyCurrentStep < stepsCount - 1) {
+    surveyCurrentStep++;
+    showSurveyStep();
+  } else {
+    await submitSurvey();
+  }
+}
+
+async function submitSurvey() {
+  const token = AUTH.getToken();
+  if (!token) return;
+
+  const btn = document.getElementById('survey-next-btn');
+  if (btn) btn.disabled = true;
+
+  // Format responses
+  const formattedAnswers = {};
+  surveyQuestions.forEach(q => {
+    const rawVal = surveyAnswers[q.id];
+    if (Array.isArray(rawVal)) {
+      // Map 'other' to text value if selected
+      const mapped = rawVal.map(v => {
+        if (v === 'other') {
+          return `Other: ${surveyAnswers[q.id + '_other'] || ''}`;
+        }
+        return v;
+      });
+      formattedAnswers[q.id] = mapped.join(', ');
+    } else {
+      formattedAnswers[q.id] = rawVal || '';
+    }
+  });
+
+  // Question 7 follow-up monthly pricing option
+  formattedAnswers['pro_price_interest'] = surveyAnswers['pro_price_interest'] || '';
+
+  try {
+    const res = await fetch('/api/feedback/pilot', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify(formattedAnswers)
+    });
+    
+    const d = await res.json();
+    if (!res.ok) throw new Error(d.error || 'Submission failed');
+    
+    surveySubmitted = true;
+    toast('Thank you! Feedback saved ✓');
+    
+    const wizard = document.getElementById('survey-wizard-view');
+    const success = document.getElementById('survey-success-view');
+    if (wizard) wizard.style.display = 'none';
+    if (success) success.style.display = 'block';
+  } catch(e) {
+    toast('Error: ' + e.message);
+    if (btn) btn.disabled = false;
+  }
+}
+
 
 /* ════ TTS ════ */
 let ttsUtterance = null;
@@ -1023,8 +1380,23 @@ window.handleGoogleCredential = async function(response) {
 window.addEventListener('DOMContentLoaded',()=>{
   initTTS();
   const user=AUTH.getUser();
-  if(user){AUTH.updateNav(user);showPage('pg-dashboard');showTab('tab-home');AUTH.updateHomeStats();buildFaq();}
-  else{showPage('pg-signup');}
+  const path=window.location.pathname;
+  if(user){
+    AUTH.updateNav(user);
+    showPage('pg-dashboard');
+    if(path==='/feedback'){
+      showTab('tab-feedback');
+    }else{
+      showTab('tab-home');
+    }
+    AUTH.updateHomeStats();
+    buildFaq();
+  }else{
+    if(path==='/feedback'){
+      sessionStorage.setItem('otm_redirect_path','/feedback');
+    }
+    showPage('pg-signup');
+  }
   // Wave bars for session
   const wb=document.getElementById('wavebox');
   if(wb){for(let i=0;i<30;i++){const b=document.createElement('div');b.className='wb';wb.appendChild(b);}}

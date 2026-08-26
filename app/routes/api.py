@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.extensions import db
 from app.models.user import User
+from app.models.pilot_feedback import PilotFeedback
 from app.services.ai import (
     generate_question as ai_generate_question,
     should_followup as ai_should_followup,
@@ -204,3 +205,59 @@ def get_session_history():
     except Exception as e:
         current_app.logger.exception(f"Error fetching session history: {str(e)}")
         return jsonify({"error": str(e)}), 500
+
+@api_bp.route('/feedback/pilot', methods=['POST'])
+@jwt_required()
+def submit_pilot_feedback():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Prevent duplicate submissions
+    existing = PilotFeedback.query.filter_by(user_id=user.id).first()
+    if existing:
+        return jsonify({"error": "You have already submitted pilot feedback. Thank you!"}), 400
+
+    data = request.get_json() or {}
+    
+    # Extract and validate parameters
+    challenge = data.get('challenge')
+    ai_feedback_helpful = data.get('ai_feedback_helpful')
+    most_valuable_feedback = data.get('most_valuable_feedback')
+    would_use_again = data.get('would_use_again')
+    pro_interest = data.get('pro_interest')
+    
+    if not challenge or not ai_feedback_helpful or not most_valuable_feedback or not would_use_again or not pro_interest:
+        return jsonify({"error": "Missing required feedback fields"}), 400
+        
+    confusing_inaccurate_unnecessary = data.get('confusing_inaccurate_unnecessary', '')
+    desired_improvement = data.get('desired_improvement', '')
+    pro_price_interest = data.get('pro_price_interest', '')
+    
+    # Create record
+    feedback_record = PilotFeedback(
+        user_id=user.id,
+        email=user.email,
+        challenge=challenge,
+        ai_feedback_helpful=ai_feedback_helpful,
+        most_valuable_feedback=most_valuable_feedback,
+        confusing_inaccurate_unnecessary=confusing_inaccurate_unnecessary,
+        would_use_again=would_use_again,
+        desired_improvement=desired_improvement,
+        pro_interest=pro_interest,
+        pro_price_interest=pro_price_interest
+    )
+    
+    db.session.add(feedback_record)
+    db.session.commit()
+    
+    return jsonify({"message": "Feedback submitted successfully!", "id": feedback_record.id}), 201
+
+@api_bp.route('/feedback/pilot/status', methods=['GET'])
+@jwt_required()
+def get_pilot_feedback_status():
+    user_id = get_jwt_identity()
+    existing = PilotFeedback.query.filter_by(user_id=user_id).first()
+    return jsonify({"submitted": existing is not None})
+

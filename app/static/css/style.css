@@ -601,3 +601,28 @@ a{color:inherit;text-decoration:none}
   max-width: 320px;
   line-height: 1.6;
 }
+
+/* ════ SURVEY WIZARD ════ */
+.survey-option-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1.5px solid var(--border2);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.survey-option-card:hover {
+  border-color: rgba(124, 111, 255, 0.35);
+  background: rgba(124, 111, 255, 0.06);
+}
+.survey-option-card.sel {
+  border-color: var(--color-primary);
+  background: rgba(124, 111, 255, 0.12);
+  box-shadow: 0 0 0 1px rgba(124, 111, 255, 0.2);
+}
+.survey-option-card.sel span {
+  color: var(--text) !important;
+}

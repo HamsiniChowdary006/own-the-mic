@@ -529,144 +529,60 @@
 
   <!-- ── TAB: FEEDBACK ── -->
   <div id="tab-feedback" class="tab-content" style="display:none">
-    <div class="sec-tag">Share Feedback</div>
-    <div class="sec-title" style="margin-bottom:6px">Help us build<br>something worth using.</div>
-    <div class="sec-body" style="margin-bottom:32px">Not feedback about a session — feedback about OwnTheMic itself. Every response is read personally and shapes what we build next.</div>
+    <div class="feedback-survey-container" style="max-width: 600px; margin: 0 auto; padding: var(--space-md) 0;">
+      
+      <!-- 1. Intro View -->
+      <div id="survey-intro-view" style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px; text-align: center;">
+        <div class="sec-tag" style="margin-bottom: var(--space-md);">Help Shape OwnTheMic 🚀</div>
+        <h2 style="font-family: var(--font); font-size: 1.6rem; font-weight: 800; line-height: 1.35; margin-bottom: var(--space-md); color: var(--text);">Thank you for being one of our early beta testers!</h2>
+        <p style="font-size: 0.88rem; color: var(--text2); line-height: 1.6; margin-bottom: 16px; font-weight: 300;">
+          OwnTheMic is an AI-powered communication and mock interview coach designed to help students practice with confidence and improve their interview skills through personalised feedback.
+        </p>
+        <p style="font-size: 0.88rem; color: var(--text2); line-height: 1.6; margin-bottom: 32px; font-weight: 300;">
+          This feedback form takes 2–3 minutes to complete. Your honest responses—both positive and critical—will directly influence how we build and improve before launch.
+        </p>
+        <button class="btn btn-primary" onclick="startSurvey()" style="width: auto; padding: 0 32px;">Start Feedback Survey →</button>
+      </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
-      <!-- Feedback form -->
-      <div style="background:rgba(12,11,26,.9);border:1px solid rgba(124,111,255,.2);border-radius:22px;padding:32px">
-        <div style="font-family:var(--font);font-size:1rem;font-weight:700;letter-spacing:-.03em;margin-bottom:5px">How's your overall experience?</div>
-        <div style="font-size:.8rem;color:var(--text3);margin-bottom:20px">What's your first impression of OwnTheMic?</div>
-
-        <!-- Emoji rating -->
-        <div style="margin-bottom:22px">
-          <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;color:var(--text3);text-transform:uppercase;margin-bottom:10px">Overall feeling</div>
-          <div style="display:flex;gap:10px" id="emoji-row">
-            <button class="emoji-btn" data-val="1" onclick="selectEmoji(1)" title="Needs a lot of work" style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.03);border:1.5px solid var(--border2);font-size:1.3rem;cursor:pointer;transition:all .22s">😕</button>
-            <button class="emoji-btn" data-val="2" onclick="selectEmoji(2)" title="It's okay" style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.03);border:1.5px solid var(--border2);font-size:1.3rem;cursor:pointer;transition:all .22s">😐</button>
-            <button class="emoji-btn" data-val="3" onclick="selectEmoji(3)" title="Pretty good" style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.03);border:1.5px solid var(--border2);font-size:1.3rem;cursor:pointer;transition:all .22s">🙂</button>
-            <button class="emoji-btn" data-val="4" onclick="selectEmoji(4)" title="Really good" style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.03);border:1.5px solid var(--border2);font-size:1.3rem;cursor:pointer;transition:all .22s">😊</button>
-            <button class="emoji-btn" data-val="5" onclick="selectEmoji(5)" title="Love it!" style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.03);border:1.5px solid var(--border2);font-size:1.3rem;cursor:pointer;transition:all .22s">🤩</button>
-          </div>
+      <!-- 2. Wizard View -->
+      <div id="survey-wizard-view" style="display: none; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px; position: relative;">
+        <!-- Header Info -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <span id="survey-step-title" style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--purple);">Question 1 of 7</span>
+          <span id="survey-step-pct" style="font-size: 0.75rem; color: var(--text3);">14% completed</span>
+        </div>
+        <!-- Progress Bar -->
+        <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; margin-bottom: 36px; overflow: hidden;">
+          <div id="survey-progress-bar" style="width: 14%; height: 100%; background: linear-gradient(90deg, var(--purple), var(--teal)); transition: width 0.3s ease;"></div>
         </div>
 
-        <!-- Star ratings per aspect -->
-        <div style="margin-bottom:22px">
-          <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;color:var(--text3);text-transform:uppercase;margin-bottom:12px">Rate specific aspects</div>
-          <div style="display:flex;flex-direction:column;gap:13px">
-            <div style="display:flex;align-items:center;justify-content:space-between">
-              <span style="font-size:.82rem;color:var(--text2)">Visual design</span>
-              <div class="aspect-stars" data-aspect="design" style="display:flex;gap:4px">
-                <span class="astar" data-v="1" onclick="rateAspect('design',1)">★</span>
-                <span class="astar" data-v="2" onclick="rateAspect('design',2)">★</span>
-                <span class="astar" data-v="3" onclick="rateAspect('design',3)">★</span>
-                <span class="astar" data-v="4" onclick="rateAspect('design',4)">★</span>
-                <span class="astar" data-v="5" onclick="rateAspect('design',5)">★</span>
-              </div>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between">
-              <span style="font-size:.82rem;color:var(--text2)">Ease of understanding</span>
-              <div class="aspect-stars" data-aspect="clarity" style="display:flex;gap:4px">
-                <span class="astar" data-v="1" onclick="rateAspect('clarity',1)">★</span>
-                <span class="astar" data-v="2" onclick="rateAspect('clarity',2)">★</span>
-                <span class="astar" data-v="3" onclick="rateAspect('clarity',3)">★</span>
-                <span class="astar" data-v="4" onclick="rateAspect('clarity',4)">★</span>
-                <span class="astar" data-v="5" onclick="rateAspect('clarity',5)">★</span>
-              </div>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between">
-              <span style="font-size:.82rem;color:var(--text2)">Interview question quality</span>
-              <div class="aspect-stars" data-aspect="questions" style="display:flex;gap:4px">
-                <span class="astar" data-v="1" onclick="rateAspect('questions',1)">★</span>
-                <span class="astar" data-v="2" onclick="rateAspect('questions',2)">★</span>
-                <span class="astar" data-v="3" onclick="rateAspect('questions',3)">★</span>
-                <span class="astar" data-v="4" onclick="rateAspect('questions',4)">★</span>
-                <span class="astar" data-v="5" onclick="rateAspect('questions',5)">★</span>
-              </div>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between">
-              <span style="font-size:.82rem;color:var(--text2)">AI scoring accuracy</span>
-              <div class="aspect-stars" data-aspect="scoring" style="display:flex;gap:4px">
-                <span class="astar" data-v="1" onclick="rateAspect('scoring',1)">★</span>
-                <span class="astar" data-v="2" onclick="rateAspect('scoring',2)">★</span>
-                <span class="astar" data-v="3" onclick="rateAspect('scoring',3)">★</span>
-                <span class="astar" data-v="4" onclick="rateAspect('scoring',4)">★</span>
-                <span class="astar" data-v="5" onclick="rateAspect('scoring',5)">★</span>
-              </div>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between">
-              <span style="font-size:.82rem;color:var(--text2)">Would recommend to others</span>
-              <div class="aspect-stars" data-aspect="recommend" style="display:flex;gap:4px">
-                <span class="astar" data-v="1" onclick="rateAspect('recommend',1)">★</span>
-                <span class="astar" data-v="2" onclick="rateAspect('recommend',2)">★</span>
-                <span class="astar" data-v="3" onclick="rateAspect('recommend',3)">★</span>
-                <span class="astar" data-v="4" onclick="rateAspect('recommend',4)">★</span>
-                <span class="astar" data-v="5" onclick="rateAspect('recommend',5)">★</span>
-              </div>
-            </div>
-          </div>
+        <!-- Question Body Area -->
+        <div id="survey-question-area" style="min-height: 240px;">
+          <!-- Active question inputs dynamically injected here -->
         </div>
 
-        <!-- Text fields -->
-        <div class="field" style="margin-bottom:12px">
-          <label>What's one thing that's unclear or missing?</label>
-          <textarea id="fb-missing" style="width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:12px;padding:11px 14px;color:var(--text);font-family:var(--body);font-size:.85rem;outline:none;resize:vertical;min-height:72px;line-height:1.6;transition:border-color .2s;box-sizing:border-box" placeholder="e.g. The scoring explanation wasn't clear until I scrolled far down…" onfocus="this.style.borderColor='rgba(124,111,255,.5)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'"></textarea>
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <label>What made you want to try OwnTheMic?</label>
-          <textarea id="fb-liked" style="width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:12px;padding:11px 14px;color:var(--text);font-family:var(--body);font-size:.85rem;outline:none;resize:vertical;min-height:60px;line-height:1.6;transition:border-color .2s;box-sizing:border-box" placeholder="e.g. The live filler word tracker looks really useful…" onfocus="this.style.borderColor='rgba(124,111,255,.5)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'"></textarea>
-        </div>
-        <div class="field" style="margin-bottom:16px">
-          <label>Your email (optional — only if you want us to reply)</label>
-          <input id="fb-email" type="email" placeholder="you@example.com" style="background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:12px;padding:11px 14px;color:var(--text);font-size:.85rem;outline:none;transition:border-color .2s;width:100%" onfocus="this.style.borderColor='rgba(124,111,255,.5)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'">
-        </div>
-
-        <button class="btn btn-primary" onclick="submitSiteFeedback()" id="fb-submit-btn" style="width:100%">Submit feedback →</button>
-        <div id="fb-thanks" style="display:none;align-items:center;gap:10px;padding:14px;background:rgba(0,212,160,.06);border:1px solid rgba(0,212,160,.2);border-radius:12px;margin-top:12px">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="rgba(0,212,160,.15)" stroke="#00D4A0" stroke-width="1.5"/><path d="M8 12l3 3 5-5" stroke="#00D4A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <div><div style="font-weight:700;color:var(--teal);font-size:.88rem">Thank you — feedback saved!</div><div style="font-size:.75rem;color:var(--text3);margin-top:2px">Every response is read personally.</div></div>
+        <!-- Wizard Navigation -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 36px; border-top: 1px solid var(--border); padding-top: var(--space-lg);">
+          <button class="btn btn-ghost" id="survey-prev-btn" onclick="prevSurveyStep()" style="width: auto; padding: 0 20px;">← Back</button>
+          <button class="btn btn-primary" id="survey-next-btn" onclick="nextSurveyStep()" style="width: auto; padding: 0 24px;">Next →</button>
         </div>
       </div>
 
-      <!-- Right panel: previous feedbacks + tips -->
-      <div style="display:flex;flex-direction:column;gap:16px">
-        <!-- What happens with your feedback -->
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px">
-          <div style="font-family:var(--font);font-size:.9rem;font-weight:700;margin-bottom:14px;letter-spacing:-.02em">What happens with your feedback?</div>
-          <div style="display:flex;flex-direction:column;gap:12px">
-            <div style="display:flex;gap:12px;align-items:flex-start">
-              <div style="width:32px;height:32px;border-radius:10px;background:rgba(124,111,255,.12);border:1px solid rgba(124,111,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem">👀</div>
-              <div><div style="font-size:.82rem;font-weight:600;margin-bottom:2px">Read personally</div><div style="font-size:.76rem;color:var(--text2);line-height:1.55;font-weight:300">Every submission is read by the founders. We don't outsource this to anyone.</div></div>
-            </div>
-            <div style="display:flex;gap:12px;align-items:flex-start">
-              <div style="width:32px;height:32px;border-radius:10px;background:rgba(0,212,160,.1);border:1px solid rgba(0,212,160,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem">🔨</div>
-              <div><div style="font-size:.82rem;font-weight:600;margin-bottom:2px">Built into the product</div><div style="font-size:.76rem;color:var(--text2);line-height:1.55;font-weight:300">Patterns in your feedback directly shape what features we build next.</div></div>
-            </div>
-            <div style="display:flex;gap:12px;align-items:flex-start">
-              <div style="width:32px;height:32px;border-radius:10px;background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem">💬</div>
-              <div><div style="font-size:.82rem;font-weight:600;margin-bottom:2px">We reply (if you leave email)</div><div style="font-size:.76rem;color:var(--text2);line-height:1.55;font-weight:300">If you share your email, expect a personal reply within 48 hours.</div></div>
-            </div>
-          </div>
+      <!-- 3. Success View -->
+      <div id="survey-success-view" style="display: none; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px; text-align: center;">
+        <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(0,212,160,.1); border: 1.5px solid var(--teal); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px auto;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-
-        <!-- Your past feedback -->
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px">
-          <div style="font-family:var(--font);font-size:.9rem;font-weight:700;margin-bottom:14px;letter-spacing:-.02em">Your past submissions</div>
-          <div id="past-feedback-list">
-            <div style="color:var(--text3);font-size:.8rem;text-align:center;padding:20px 0">No submissions yet · Share your first feedback →</div>
-          </div>
-        </div>
-
-        <!-- Contact -->
-        <div style="background:linear-gradient(135deg,rgba(124,111,255,.08),rgba(0,212,160,.05));border:1px solid rgba(124,111,255,.18);border-radius:18px;padding:22px">
-          <div style="font-family:var(--font);font-size:.88rem;font-weight:700;margin-bottom:6px">Direct contact</div>
-          <div style="font-size:.78rem;color:var(--text2);line-height:1.6;margin-bottom:12px;font-weight:300">For urgent bugs, partnership enquiries, or college bulk licensing — reach us directly.</div>
-          <div style="font-size:.8rem;color:var(--purple);font-weight:600">✉ hello@ownthemic.app</div>
-        </div>
+        <h2 style="font-family: var(--font); font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; color: var(--text);">Thank you for helping us shape OwnTheMic!</h2>
+        <p style="font-size: 0.88rem; color: var(--text2); line-height: 1.6; margin-bottom: 32px; font-weight: 300;">
+          Your feedback has been saved successfully. We read every single response to shape the future of our AI interviewer coach.
+        </p>
+        <button class="btn btn-primary" onclick="showTab('tab-home')" style="width: auto; padding: 0 32px;">Go to Dashboard</button>
       </div>
+
     </div>
   </div>
+
 
   <!-- ── TAB: HISTORY ── -->
   <div id="tab-history" class="tab-content" style="display:none">
