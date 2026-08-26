@@ -445,7 +445,14 @@ async function nextQuestion(){
 
 function updateQCount(){set('q-count-display',`Q ${sess.qIndex+1} of ${setupState.numQ}`);}
 
-function showThinking(msg){const el=document.getElementById('thinking-el');if(el)el.style.display='flex';set('think-txt',msg);}
+function showThinking(msg){
+  const el=document.getElementById('thinking-el');
+  if(el){
+    el.innerHTML=`<div class="t-dots"><div class="td"></div><div class="td"></div><div class="td"></div></div><div class="think-txt" id="think-txt"></div>`;
+    el.style.display='flex';
+  }
+  set('think-txt',msg);
+}
 function hideThinking(){const el=document.getElementById('thinking-el');if(el)el.style.display='none';}
 function showApiErr(msg){
   showThinking('');

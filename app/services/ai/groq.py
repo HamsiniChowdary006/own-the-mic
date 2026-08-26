@@ -9,8 +9,14 @@ class GroqProvider(BaseAIProvider):
             raise AIProviderError("Groq API key is not configured.")
 
         url = 'https://api.groq.com/openai/v1/chat/completions'
-        # Default model matching original implementation
-        model = 'llama-3.3-70b-versatile'
+        # Try models in order of capability/preference
+        models = [
+            'llama-3.3-70b-versatile',
+            'groq/compound-mini',
+            'groq/compound',
+            'llama-3.1-70b-versatile',
+            'llama3-70b-8192'
+        ]
         
         msgs = []
         if system_prompt:
@@ -22,30 +28,35 @@ class GroqProvider(BaseAIProvider):
             'Authorization': f'Bearer {self.api_key}'
         }
         
-        try:
-            resp = requests.post(
-                url, 
-                json={
-                    "model": model,
-                    "messages": msgs,
-                    "max_tokens": 1500,
-                    "temperature": 0.8
-                }, 
-                headers=headers,
-                timeout=15
-            )
-            
-            if not resp.ok:
-                raise AIProviderError(f"Groq API error: {resp.text}")
+        last_err = ''
+        for model in models:
+            try:
+                resp = requests.post(
+                    url, 
+                    json={
+                        "model": model,
+                        "messages": msgs,
+                        "max_tokens": 1500,
+                        "temperature": 0.8
+                    }, 
+                    headers=headers,
+                    timeout=15
+                )
                 
-            data = resp.json()
-            text = data.get('choices', [{}])[0].get('message', {}).get('content')
-            if not text:
-                raise AIProviderError("Empty response from Groq API.")
+                if not resp.ok:
+                    last_err = f"Model {model} failed: {resp.text}"
+                    continue
+                    
+                data = resp.json()
+                text = data.get('choices', [{}])[0].get('message', {}).get('content')
+                if not text:
+                    last_err = f"Model {model} returned empty response"
+                    continue
+                    
+                return text.strip()
+            except Exception as e:
+                last_err = f"Model {model} exception: {str(e)}"
+                continue
                 
-            return text.strip()
-        except Exception as e:
-            if isinstance(e, AIProviderError):
-                raise
-            raise AIProviderError(f"Exception during Groq API call: {str(e)}")
+        raise AIProviderError(f"All Groq models failed. Last error: {last_err}")
 stream_with_context = False

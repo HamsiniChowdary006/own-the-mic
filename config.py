@@ -3,7 +3,7 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 
 def normalize_database_url(database_url):
